@@ -34,9 +34,7 @@
     "prettier": "^1.12.0"
   },
   "homepage": "https://github.com/monic-co/blog#readme",
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": [],
   "license": "MIT",
   "main": "n/a",
   "repository": {
