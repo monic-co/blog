@@ -51,52 +51,28 @@ class Template extends React.Component {
       rootPath = __PATH_PREFIX__ + `/`
     }
 
-    if (location.pathname === rootPath) {
-      header = (
-        <h1
+    header = (
+      <h1
+        style={{
+          fontFamily: 'Nunino, sans-serif',
+          fontWeight: 300,
+          marginTop: 0,
+          marginBottom: 100,
+        }}
+      >
+        <Link
           style={{
-            // ...scale(1.5),
-            fontFamily: 'Nunino, sans-serif',
-            fontWeight: 300,
-            marginTop: 0,
-            marginBottom: 100,
+            boxShadow: 'none',
+            textDecoration: 'none',
+            color: 'inherit',
           }}
+          to={'/'}
         >
-          <Link
-            style={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            to={'/'}
-          >
-            MONIC Blog
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          style={{
-            fontFamily: 'Nunino, sans-serif',
-            fontWeight: 400,
-            marginTop: 0,
-            marginBottom: 75,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: 'none',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            to={'/'}
-          >
-            MONIC Blog
-          </Link>
-        </h3>
-      )
-    }
+          MONIC Blog
+        </Link>
+      </h1>
+    );
+
     return (
       <div
         style={{
