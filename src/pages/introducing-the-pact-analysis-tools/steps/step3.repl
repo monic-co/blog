@@ -1,0 +1,6 @@
+(env-keys ["accountsadmin" "user123" "user456"])
+(env-data { "accounts-admin-keyset": ["accountsadmin"] })
+(begin-tx)
+(load "step3.pact")
+(commit-tx)
+(verify 'accounts)

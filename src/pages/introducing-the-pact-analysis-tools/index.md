@@ -10,29 +10,7 @@ Together with [Kadena](http://kadena.io/), Monic just released a static analysis
 
 We begin with an example to help motivate building this tool.
 
-This is a
-
-```lisp
-(module accounts 'accounts-admin-keyset
-  "Account balances module"
-
-  (defschema account
-    "account"
-    balance:integer
-    ks:keyset)
-  (deftable accounts:{account})
-
-(defun transfer (from:string to:string amount:integer)
-  "Transfer money between accounts"
-
-  (let ((from-bal (at 'balance (read accounts from)))
-        (from-ks  (at 'ks      (read accounts from)))
-        (to-bal   (at 'balance (read accounts to))))
-    (enforce-keyset from-ks)
-    (enforce (>= from-bal amount) "Insufficient Funds")
-    (update accounts from { "balance": (- from-bal amount) })
-    (update accounts to   { "balance": (+ to-bal amount) }))))
-```
+<annotated-code></annotated-code>
 
 ## How does it work?
 

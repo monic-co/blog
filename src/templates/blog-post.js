@@ -2,9 +2,16 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import Link from 'gatsby-link'
 import get from 'lodash/get'
+import rehypeReact from "rehype-react";
 
+import AnnotatedCode from '../components/AnnotatedCode'
 import Bio from '../components/Bio'
 // import { rhythm, scale } from '../utils/typography'
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: { "annotated-code": AnnotatedCode },
+}).Compiler;
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -32,7 +39,7 @@ class BlogPostTemplate extends React.Component {
         >
           {post.frontmatter.date}
         </p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+        {renderAst(post.htmlAst)}
         <hr
           style={{
             backgroundColor: '#0a2e6b',
@@ -85,7 +92,7 @@ export const pageQuery = graphql`
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
-      html
+      htmlAst
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

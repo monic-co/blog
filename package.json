@@ -25,13 +25,16 @@
     "gatsby-transformer-remark": "^1.7.40",
     "gatsby-transformer-sharp": "^1.6.22",
     "lodash": "^4.17.5",
-    "react-emotion": "^9.1.3"
+    "react-diff-view": "^1.4.11",
+    "react-emotion": "^9.1.3",
+    "rehype-react": "^3.0.2"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
     "gh-pages": "^1.1.0",
-    "prettier": "^1.12.0"
+    "prettier": "^1.12.0",
+    "raw-loader": "^0.5.1"
   },
   "homepage": "https://github.com/monic-co/blog#readme",
   "keywords": [],
