@@ -44,6 +44,9 @@ const Button = styled.button`
   margin: 10px;
   background: ${props => props.selected ? 'white' : 'transparent'};
   border: 2px solid white;
+  cursor: pointer;
+  outline: 0;
+  box-shadow: none;
 `;
 
 const Description = styled.div`
