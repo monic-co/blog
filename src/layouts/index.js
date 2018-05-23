@@ -18,7 +18,7 @@ injectGlobal`
 
   h2, h3 {
     font-weight: 300;
-    margin: 30px 0;
+    margin: 60px 0 30px;
   }
 
   p, ul {
@@ -39,59 +39,55 @@ injectGlobal`
   }
 `
 
+const Header = styled.header`
+  margin: 3vw auto;
+  display: flex;
+  justify-content: center;
+`;
+
+const Main = styled.main`
+  max-width: 1000px;
+  margin: auto;
+`;
+
+const Monic = styled.span`
+  font-weight: 400;
+  letter-spacing: 2px;
+`;
+
+const H1 = styled.h1`
+  font-family: Nunino, sans-serif;
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 100px;
+`;
+
 require("./theme.css");
 
-class Template extends React.Component {
+export default class Template extends React.Component {
   render() {
-    const { location, children } = this.props
-    let header
-
-    let rootPath = `/`
-    if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
-      rootPath = __PATH_PREFIX__ + `/`
-    }
-
-    header = (
-      <h1
-        style={{
-          fontFamily: 'Nunino, sans-serif',
-          fontWeight: 300,
-          marginTop: 0,
-          marginBottom: 100,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: 'none',
-            textDecoration: 'none',
-            color: 'inherit',
-          }}
-          to={'/'}
-        >
-          MONIC Blog
-        </Link>
-      </h1>
-    );
+    const { children } = this.props
 
     return (
-      <div
-        style={{
-        }}
-      >
-        <header style={{margin: '3vw auto', display: 'flex', justifyContent: 'center'}}>
-          <div>
-            {header}
-          </div>
-        </header>
-        <div style={{
-          maxWidth: 1200,
-          margin: 'auto',
-        }}>
-          {children()}
-        </div>
+      <div>
+        <Header>
+          <H1>
+            <Link
+              style={{
+                boxShadow: 'none',
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+              to="/"
+            >
+              <Monic>MONIC</Monic>
+              {' '}
+              Blog
+            </Link>
+          </H1>
+        </Header>
+        <Main>{children()}</Main>
       </div>
     )
   }
 }
-
-export default Template

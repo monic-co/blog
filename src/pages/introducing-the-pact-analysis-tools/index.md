@@ -4,11 +4,11 @@ date: 2018-05-17 13:16:01
 tags:
 ---
 
-Together with [Kadena](http://kadena.io/), Monic just released a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language. In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
+Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language. In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
 
 ## Example: balance transfer
 
-We begin with an example to help motivate building this tool.
+We begin with an example to help motivate building this tool. This is a simple contract tracking only user balances (you can think of this as an [ERC20](https://en.wikipedia.org/wiki/ERC20) contract but without all of ERC20's functionality. For this example we're only going to demonstrate a `transfer` function.
 
 <annotated-code></annotated-code>
 
