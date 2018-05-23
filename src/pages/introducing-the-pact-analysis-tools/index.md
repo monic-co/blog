@@ -4,7 +4,7 @@ date: 2018-05-17 13:16:01
 tags:
 ---
 
-Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language. In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
+Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language. In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
 
 ## Example: balance transfer
 
@@ -14,11 +14,19 @@ We begin with an example to help motivate building this tool. This is a simple c
 
 ## How does it work?
 
-The most important tool we used was the [SBV](http://leventerkok.github.io/sbv/) (SMT Based Verification) library by Levent Erkök, which provides a Haskell interface to SMT solvers. SBV supports a handful of solvers, though the only one we've used so far is Microsoft's [Z3](https://github.com/Z3Prover/z3).
+We translate Pact code into a set of constraints for an [SMT solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) (we used [Z3](https://github.com/Z3Prover/z3)). We then ask for a set of inputs that results in a violated invariant or property. There are three possible results:
+
+* The solver returns, having satisfied the constraints. This means that there is a set of inputs violating the property / invariant. We display it for the user like in the example.
+* The solver returns and says that the constraints are impossible to satisfy. This means that the property / invariant is valid.
+* The solver times out. This means that we can't tell whether the property / invariant is valid without waiting for longer. The search we're asking Z3 to do is decidable, but it's pretty easy to make it take a very long time. This hasn't been a real problem for any contracts we've analyzed so far.
+
+The two most important tools we use are Z3 itself, and the [SBV](http://leventerkok.github.io/sbv/) (SMT Based Verification) library by Levent Erkök, which provides a high-level Haskell interface to SMT solvers.
+
+The pact analysis tool is a large codebase, but we can understand its basic approach via a smaller example.
 
 ### SQL injection search.
 
-The pact analysis tool is a large codebase, but we can understand its basic approach via a smaller example. We're going to detect possible SQL injections given a simple expression language. The complete example is available [in the sbv repo](https://github.com/LeventErkok/sbv/blob/bfc6c80fe4e4546ba26a1bd045e87b88e973f7f4/Documentation/SBV/Examples/Strings/SQLInjection.hs)
+We're going to analyze a simple language intended as an example of a server-side web scripting language, where we can query a database and munge strings. Our analysis will detect possible SQL injections.
 
 We start with the terms of the language. This is a stringly-typed language, somewhat like bash, with the following types of expressions:
 
@@ -28,7 +36,7 @@ We start with the terms of the language. This is a stringly-typed language, some
 * `ReadVar`: read a variable in scope. Since our language is stringly typed we can use dynamic variables names:
   - `ReadVar (Concat "user_" "name")`
   - `ReadVar (Concat "user_" (ReadVar "category"))`
-  - `ReadVar (Query "SELECT var FROM vars WHERE id=5)`
+  - `ReadVar (Query "SELECT var FROM vars WHERE id=5")`
 
 ```haskell
 -- | Simple expression language
@@ -49,7 +57,7 @@ exampleProgram = Query $ foldr1 Concat [ "SELECT msg FROM msgs WHERE topicid='"
                                        ]
 ```
 
-Now we need some way to translate these expressions into constraints that z3 can solve. This translation looks like evaluation. One way to think about this is that we're going to ask z3 to run evaluation backwards (to give us inputs producing some output). So we need to describe how evaluation runs forwards.
+Now we need some way to translate these expressions into constraints that Z3 can solve. Surprisingly, this translation looks like evaluation. One way to think about this is that we're going to ask Z3 to run evaluation backwards (to give us inputs producing some output). So we need to describe to Z3 how evaluation runs forwards.
 
 ```haskell
 -- | Evaluation monad. The state argument is the environment to store
@@ -70,9 +78,11 @@ eval (ReadVar nm)      = do n   <- eval nm
 
 `SFunArray` represents a mapping (think of a block of memory or a database table). Our `SFunArray String String` represents the variables in scope in our language. We also write our program's queries as `[SString]` (`SString` is an SBV *symbolic* string).
 
-We need to recognize exploits. To do so we use regular expressions (z3 has a theory of strings and regular expressions).
+We need to recognize exploits. To do so we use regular expressions (Z3 has a theory of strings and regular expressions).
 
-From what I've seen, strings and regular expressions are quite difficult to solve for. It's easy to accidentally generate a very large space for z3 to search. To make the problem tractable, we use a simplified model of what exploits look like.
+From what I've seen, strings and regular expressions are quite difficult to solve for. It's easy to accidentally generate a very large space for Z3 to search. To make the problem tractable, we use a simplified model of what exploits look like.
+
+Note that we've overloaded Haskell's `+` and `*` operators to mean "or" and "then", respectively. This idea comes from [Gabriel Gonzalez](https://github.com/Gabriel439/slides/blob/master/regex/regex.md).
 
 ```haskell
 -- | We'll greatly simplify here and say a statement is either a select or a drop:
@@ -88,18 +98,21 @@ exploitRe = KPlus (statementRe * "; ")
 Finally we analyze the example program (`query ("SELECT msg FROM msgs where topicid='" ++ my_topicid ++ "'")`):
 
 ```haskell
-badTopic <- sString "badTopic"
+findInjection = do
+  badTopic <- sString "badTopic"
 
--- Create an initial environment that returns the symbolic
--- value my_topicid only, and undefined for all other variables
-undef      <- sString "uninitialized"
-let env :: SFunArray String String
-    env = mkSFunArray $ \varName -> ite (varName .== "my_topicid") badTopic undef
+  -- Create an initial environment that returns the symbolic
+  -- value my_topicid only, and undefined for all other variables
+  undef      <- sString "uninitialized"
+  let env :: SFunArray String String
+      env = mkSFunArray $ \varName -> ite (varName .== "my_topicid") badTopic undef
 
-(_, queries) <- runWriterT (evalStateT (eval expr) env)
+  (_, queries) <- runWriterT (evalStateT (eval expr) env)
 
--- For all the queries thus generated, ask that one of them be "explotiable"
-constrain $ bAny (`R.match` exploitRe) queries
+  -- For all the queries thus generated, ask that one of them be "explotiable"
+  constrain $ bAny (`R.match` exploitRe) queries
+
+  query ... -- get result from SBV
 ```
 
 ```
@@ -107,15 +120,15 @@ constrain $ bAny (`R.match` exploitRe) queries
 "h'; DROP TABLE 'users"
 ```
 
-Indeed, if we substitute the suggested string, we get the program `query ("SELECT msg FROM msgs where topicid='h'; DROP TABLE 'users'")` which would query for topic "h" and then delete the users table!
+Indeed, if we substitute the suggested string, we get the program `query ("SELECT msg FROM msgs where topicid='h'; DROP TABLE 'users'")`, a [classic SQL injection](https://xkcd.com/327/).
 
-This was a simplified example, but follows the same fundamental approach as the Pact analysis tool.
+This was a simplified example, but follows the same fundamental approach as the Pact analysis tool. The complete example is available [in the sbv repo](https://github.com/LeventErkok/sbv/blob/bfc6c80fe4e4546ba26a1bd045e87b88e973f7f4/Documentation/SBV/Examples/Strings/SQLInjection.hs).
 
 ### The smt-lib 2 output
 
 It's almost hard to believe that the above code was all to build a set of constraints. This is because SBV exposes a very high level interface which does most of the heavy lifting.
 
-Let's log the low-level interaction with z3 to understand what's happening.
+To get a better understanding of what Z3 is actually doing, let's log the low-level interaction between SBV and Z3.
 
 ```
 [GOOD] ; --- literal constants ---
@@ -143,7 +156,7 @@ Let's log the low-level interaction with z3 to understand what's happening.
 [RECV] ((s0 "h'; DROP TABLE 'users"))
 ```
 
-SBV produces fantastically legible output. I've debugged at this level a few times and usually been able to find I need. I'm not sure there's much I can say to make this clearer than it already is.
+That's it! The `GOOD` lines are a translation of our program. `(assert s7)` is saying "I assert that there is no input producing a query matching our exploit pattern". Then the two sets of `SEND` / `RECV` are Z3 saying, "actually, I know a bad input" (`sat`) and "here it is" (`((s0 "h'; DROP TABLE 'users"))`).
 
 ## Future directions
 

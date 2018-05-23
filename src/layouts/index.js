@@ -24,6 +24,7 @@ injectGlobal`
   p, ul {
     font-size: 14pt;
     line-height: 1.55;
+    margin: 22px 0;
   }
 
   li {
@@ -36,6 +37,11 @@ injectGlobal`
 
   a {
     text-decoration: none;
+  }
+
+  ::selection {
+    color: #e0e0e0;
+    background-color: #073642;
   }
 `
 

@@ -37,6 +37,9 @@ const Wrapper = styled.div`
 const Warning = styled.div`
   background-color: #ffffc6;
   font-family: Consolas, Courier, monospace;
+  margin-left: 123px;
+  border-left: 1px solid white;
+  padding: 10px 0 5px 20px;
 `;
 
 const Button = styled.button`
@@ -53,15 +56,25 @@ const Description = styled.div`
   margin: 20px 0;
 `;
 
+const Note = styled.div`
+  font-family: Consolas, Courier, monospace;
+  margin-left: 123px;
+  border-left: 1px solid white;
+  padding: 10px 0 5px 20px;
+`;
+
 const pages = [
   { hunks: hunks0,
-    description: <p>The initial contract. We define a schema describing the shape of the data and a table holding rows of that shape. Last, a transfer function which first checks that the sender authorized a transfer and has sufficient funds, then updates both the sending and receiving account balances.</p>,
-    widgets: {},
+    description: <p>Our initial smart contract. Last, a transfer function which first checks that the sender authorized a transfer and has sufficient funds, then updates both the sending and receiving account balances.</p>,
+    widgets: {
+      [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of some data</Note>,
+      [getChangeKey(hunks0[0].changes[9])]: <Note>This table contains rows of accounts</Note>,
+    },
   },
   { hunks: hunks1,
-    description: <p>We add an invariant that all account balances must be non-negative. Our toolresponds with example inputs invalidating the invariant. And indeed, we forgot to check for a negative balance, which would allow a user drain (and overdraw) other users' accounts.</p>,
+    description: <p>We add an invariant that all account balances must be non-negative. Our tool responds with example inputs invalidating the invariant. And indeed, we forgot to check for a negative amount, which would allow a user drain (and overdraw) other users' accounts.</p>,
     widgets: {
-      [getChangeKey(hunks1[0].changes[14])]: <Warning>(invariant) Invalidating model found: from = "" :: String, to = "" :: String, amount = -39 :: Integer</Warning>,
+      [getChangeKey(hunks1[0].changes[13])]: <Warning>(invariant) Invalidating model found: from = "" :: String, to = "" :: String, amount = -39 :: Integer</Warning>,
     },
   },
   { hunks: hunks2,
@@ -71,16 +84,16 @@ const pages = [
   { hunks: hunks3,
     description: (
       <div>
-      <p>
-        Now we add a property to check that a transfer doesn't create or destroy money out of thin air. <code>int-column-conserve</code> means "the sum of all balances in the table is preserved".
-      </p>
-      <p>
-        This time the balance looks fine, but it's a bit suspicious that <code>from</code> and <code>to</code> are the same. But looking at the last two lines of the function, we see that, given the example inputs (<code>amount = 1</code>) we end up writing the new balance as <code>from-bal - 1</code> and the <em>overwriting</em> it with <code>to-bal + 1</code>, effectively creating $1 out of thin air.
-      </p>
+        <p>
+          Now we add a property to check that a transfer doesn't create or destroy money out of thin air. <code>int-column-conserve</code> means "the sum of all balances in the table is preserved".
+        </p>
+        <p>
+          This time the balance looks fine, but it's a bit suspicious that <code>from</code> and <code>to</code> are the same. But looking at the last two lines of the function, we see that, given the example inputs (<code>amount = 1</code>) we end up writing the new balance as <code>from-bal - 1</code> and the <em>overwriting</em> it with <code>to-bal + 1</code>, effectively creating $1 out of thin air.
+        </p>
       </div>
     ),
     widgets: {
-      [getChangeKey(hunks3[0].changes[17])]: <Warning>Invalidating model found: from = "" :: String, to = "" :: String, amount = 1 :: Integer</Warning>,
+      [getChangeKey(hunks3[0].changes[16])]: <Warning>Invalidating model found: from = "" :: String, to = "" :: String, amount = 1 :: Integer</Warning>,
     },
   },
   { hunks: hunks4,
