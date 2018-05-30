@@ -8,15 +8,15 @@ require('react-diff-view/src/Hunk.css');
 require('react-diff-view/src/Widget.css');
 
 import diffnull0 from
-  'raw-loader!../pages/introducing-the-pact-analysis-tools/steps/diffnull0';
+  'raw-loader!../pages/introducing-the-pact-property-checker/steps/diffnull0';
 import diff01 from
-  'raw-loader!../pages/introducing-the-pact-analysis-tools/steps/diff01';
+  'raw-loader!../pages/introducing-the-pact-property-checker/steps/diff01';
 import diff12 from
-  'raw-loader!../pages/introducing-the-pact-analysis-tools/steps/diff12';
+  'raw-loader!../pages/introducing-the-pact-property-checker/steps/diff12';
 import diff23 from
-  'raw-loader!../pages/introducing-the-pact-analysis-tools/steps/diff23';
+  'raw-loader!../pages/introducing-the-pact-property-checker/steps/diff23';
 import diff34 from
-  'raw-loader!../pages/introducing-the-pact-analysis-tools/steps/diff34';
+  'raw-loader!../pages/introducing-the-pact-property-checker/steps/diff34';
 
 let hunks0 = parseDiff(diffnull0)[0].hunks;
 let hunks1 = parseDiff(diff01)[0].hunks;
