@@ -65,7 +65,7 @@ const Note = styled.div`
 
 const pages = [
   { hunks: hunks0,
-    description: <p>Our initial smart contract. Last, a transfer function which first checks that the sender authorized a transfer and has sufficient funds, then updates both the sending and receiving account balances.</p>,
+    description: <p>Our initial smart contract. The <code>transfer</code> function checks that the sender authorized a transfer and has sufficient funds, then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.</p>,
     widgets: {
       [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of some data</Note>,
       [getChangeKey(hunks0[0].changes[9])]: <Note>This table contains rows of accounts</Note>,

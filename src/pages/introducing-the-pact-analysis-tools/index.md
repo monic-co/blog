@@ -1,20 +1,54 @@
 ---
-title: Introducing the Pact analysis tools
+title: Introducing the Pact property checker
 date: 2018-05-17 13:16:01
 tags:
 ---
 
-Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language. In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
+Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the "property checker." In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
 
-## Example: balance transfer
+## Pact: some background
 
-We begin with an example to help motivate building this tool. This is a simple contract tracking only user balances (you can think of this as an [ERC20](https://en.wikipedia.org/wiki/ERC20) contract but without all of ERC20's functionality. For this example we're only going to demonstrate a `transfer` function.
+As a smart contract language, Pact is designed to be run within the confines of a blockchain. Users submit transactions to the network, and if a transaction is accepted into the system, the user's code will either create a new contract, or interact with a contract already deployed to the system. Each contract maintains state across interactions via a SQL-like table model for data.
+
+Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node,) but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally.) In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll-back) the transaction:
+
+```lisp
+(defun read-user:user (name:string)
+  "Read the user data from row indexed by `name` if the user is an admin. Aborts otherwise."
+  (enforce-keyset 'admins)
+  (read users name))
+```
+
+## The state of smart contract security
+
+As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every one of these exploited Ethereum contracts was written by either one of the creators of Ethereum, or a foremost Solidity expert.
+
+Though Pact was designed to make programmer errors more unlikely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very easily. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
+
+## The Pact property checker
+
+To address the current state of affairs, we've built our property checking system that allows programmers to decorate:
+
+- table schemas with invariants, and
+- functions with theorems
+
+that must hold for _all_ possible inputs and database states.
+
+If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://rise4fun.com/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), our system is similar.
+
+We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development.
+
+To see how it works, let's go through an example.
+
+## An example: transferring funds
+
+This is a simple contract for tracking user balances of a fictional currency. If you're familiar with Ethereum, you can think of this as simplified version of an [ERC20](https://en.wikipedia.org/wiki/ERC20) contract. For this example we're going to ignore concerns like issuance of the currency, and demonstrate only a `transfer` function to send funds between accounts.
 
 <annotated-code></annotated-code>
 
 ## How does it work?
 
-We translate Pact code into a set of constraints for an [SMT solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) (we used [Z3](https://github.com/Z3Prover/z3)). We then ask for a set of inputs that results in a violated invariant or property. There are three possible results:
+We translate Pact code into a set of constraints for an [SMT solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) (we used Microsoft's [Z3](https://github.com/Z3Prover/z3)). We then ask for a set of inputs that results in a violated invariant or property. There are three possible results:
 
 * The solver returns, having satisfied the constraints. This means that there is a set of inputs violating the property / invariant. We display it for the user like in the example.
 * The solver returns and says that the constraints are impossible to satisfy. This means that the property / invariant is valid.
@@ -45,7 +79,7 @@ data SQLExpr = Query   SQLExpr
              | Concat  SQLExpr SQLExpr
              | ReadVar SQLExpr
 
--- | A simple program to query all messages with a given topic id. In SQL like notation:
+-- | A simple program to query all messages with a given topic id. In SQL-like notation:
 --
 -- @
 --   query ("SELECT msg FROM msgs where topicid='" ++ my_topicid ++ "'")
@@ -66,19 +100,19 @@ type M = StateT (SFunArray String String) (WriterT [SString] Symbolic)
 
 -- | Given an expression, symbolically evaluate it
 eval :: SQLExpr -> M SString
-eval (Query q)         = do q' <- eval q
-                            tell [q']
-                            lift $ lift exists_
-eval (Const str)       = return $ literal str
-eval (Concat e1 e2)    = (.++) <$> eval e1 <*> eval e2
-eval (ReadVar nm)      = do n   <- eval nm
-                            arr <- get
-                            return $ readArray arr n
+eval (Query q)      = do q' <- eval q
+                         tell [q']
+                         lift $ lift exists_
+eval (Const str)    = return $ literal str
+eval (Concat e1 e2) = (.++) <$> eval e1 <*> eval e2
+eval (ReadVar nm)   = do n   <- eval nm
+                         arr <- get
+                         return $ readArray arr n
 ```
 
-`SFunArray` represents a mapping (think of a block of memory or a database table). Our `SFunArray String String` represents the variables in scope in our language. We also write our program's queries as `[SString]` (`SString` is an SBV *symbolic* string).
+`SFunArray` represents a mapping (think of a block of memory or a database table.) Our `SFunArray String String` represents the variables in scope in our language. We also write our program's queries as `[SString]` (`SString` is an SBV *symbolic* string.)
 
-We need to recognize exploits. To do so we use regular expressions (Z3 has a theory of strings and regular expressions).
+We need to recognize exploits. To do so we use regular expressions (Z3 has a theory of strings and regular expressions.)
 
 From what I've seen, strings and regular expressions are quite difficult to solve for. It's easy to accidentally generate a very large space for Z3 to search. To make the problem tractable, we use a simplified model of what exploits look like.
 
@@ -103,7 +137,7 @@ findInjection = do
 
   -- Create an initial environment that returns the symbolic
   -- value my_topicid only, and undefined for all other variables
-  undef      <- sString "uninitialized"
+  undef <- sString "uninitialized"
   let env :: SFunArray String String
       env = mkSFunArray $ \varName -> ite (varName .== "my_topicid") badTopic undef
 
