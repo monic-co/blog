@@ -32,6 +32,14 @@ const Selectors = styled.div`
 const Wrapper = styled.div`
   margin-top: 40px;
   font-size: 12pt;
+
+  // the next two rules have the effect of removing the line number columns
+  td.diff-gutter {
+    visibility: collapse;
+  }
+  table.diff {
+    margin-left: -14ch;
+  }
 `;
 
 const Warning = styled.div`
