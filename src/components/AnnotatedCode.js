@@ -77,6 +77,7 @@ const Note = styled.div`
 
 const pages = [
   { hunks: hunks0,
+    title: 'Initial contract',
     description: <p>Our initial smart contract. The <code>transfer</code> function checks that the sender authorized a transfer and has sufficient funds, then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.</p>,
     widgets: {
       [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of some data</Note>,
@@ -84,16 +85,19 @@ const pages = [
     },
   },
   { hunks: hunks1,
+    title: 'Positive balance invariant',
     description: <p>We add an invariant that all account balances must be non-negative. Our tool responds with example inputs invalidating the invariant. And indeed, we forgot to check for a negative amount, which would allow a user drain (and overdraw) other users' accounts.</p>,
     widgets: {
       [getChangeKey(hunks1[0].changes[13])]: <Warning>(invariant) Invalidating model found: from = "" :: String, to = "" :: String, amount = -39 :: Integer</Warning>,
     },
   },
   { hunks: hunks2,
+    title: 'Enforcing a positive transfer amount',
     description: "The fix is simply to enforce that the amount is positive.",
     widgets: {},
   },
   { hunks: hunks3,
+    title: 'Column conservation',
     description: (
       <div>
         <p>
@@ -109,6 +113,7 @@ const pages = [
     },
   },
   { hunks: hunks4,
+    title: 'Another fix',
     description: <p>We choose the easiest fix -- enforcing that the sender and recipient are not the same account.</p>,
     widgets: {},
   }
@@ -143,12 +148,12 @@ export default class AnnotatedCode extends React.Component {
 
     let tabs = (
       <Selectors>
-        {pages.map((_page, index) =>
+        {pages.map(({title}, index) =>
           <Button
             key={index}
             selected={index == tabIndex}
             onClick={() => this.setState({tabIndex: index})}
-          >{index}</Button>
+          >{index + ': ' + title}</Button>
         )}
       </Selectors>
     );
