@@ -40,6 +40,10 @@ const Wrapper = styled.div`
   table.diff {
     margin-left: -14ch;
   }
+
+  tr.diff-hunk-header {
+    display: none;
+  }
 `;
 
 const Warning = styled.div`
