@@ -10,7 +10,7 @@ Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has de
 
 As a smart contract language, Pact is designed to be run within the confines of a blockchain. Users submit transactions to the network, and if a transaction is accepted into the system, the user's code will either create a new contract, or interact with a contract already deployed to the system. Each contract maintains state across interactions via a SQL-like table model for data.
 
-Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node,) but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally.) In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll-back) the transaction:
+Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node), but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally). In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll-back) the transaction:
 
 ```lisp
 (defun read-user:user (name:string)
@@ -23,7 +23,7 @@ Like most smart contract languages, Pact is deterministic (so that the same code
 
 As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every one of these exploited Ethereum contracts was written by either one of the creators of Ethereum, or a foremost Solidity expert.
 
-Though Pact was designed to make programmer errors more unlikely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very easily. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
+Though Pact was designed to make programmer errors more unlikely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
 
 ## The Pact property checker
 
@@ -110,9 +110,9 @@ eval (ReadVar nm)   = do n   <- eval nm
                          return $ readArray arr n
 ```
 
-`SFunArray` represents a mapping (think of a block of memory or a database table.) Our `SFunArray String String` represents the variables in scope in our language. We also write our program's queries as `[SString]` (`SString` is an SBV *symbolic* string.)
+`SFunArray` represents a mapping (think of a block of memory or a database table). Our `SFunArray String String` represents the variables in scope in our language. We also write our program's queries as `[SString]` (`SString` is an SBV *symbolic* string).
 
-We need to recognize exploits. To do so we use regular expressions (Z3 has a theory of strings and regular expressions.)
+We need to recognize exploits. To do so we use regular expressions (Z3 has a theory of strings and regular expressions).
 
 From what I've seen, strings and regular expressions are quite difficult to solve for. It's easy to accidentally generate a very large space for Z3 to search. To make the problem tractable, we use a simplified model of what exploits look like.
 
