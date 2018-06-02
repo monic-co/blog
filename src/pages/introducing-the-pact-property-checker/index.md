@@ -81,7 +81,7 @@ We translate Pact code into a set of constraints for an [SMT solver](https://en.
 * The solver returns and says that the constraints are impossible to satisfy. This means that the property or invariant is valid.
 * The solver times out. This means that we can't tell whether the property or invariant is valid without waiting for longer. The search we're asking Z3 to do is decidable, but it's pretty easy to make it take a very long time. This hasn't been a real problem for any contracts we've analyzed so far.
 
-The two most important tools we use are Z3 itself, and the [SBV](http://leventerkok.github.io/sbv/) (SMT Based Verification) library by Levent Erkök, which provides a high-level Haskell interface to SMT solvers.
+The two most important tools we use are Z3 itself, and the [SBV](http://leventerkok.github.io/sbv/) (SMT Based Verification) library by [Levent Erkök](http://leventerkok.github.io/), which provides a high-level Haskell interface to SMT solvers.
 
 The pact analysis tool is a large codebase, but we can understand its basic approach via a smaller example.
 
