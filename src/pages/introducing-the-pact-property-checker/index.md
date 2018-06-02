@@ -4,7 +4,7 @@ date: 2018-05-17 13:16:01
 tags:
 ---
 
-Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the "property checker." In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
+Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the "property checker". In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
 
 ## Pact: some background
 
