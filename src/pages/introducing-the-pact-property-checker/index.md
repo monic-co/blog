@@ -14,7 +14,7 @@ Like most smart contract languages, Pact is deterministic (so that the same code
 
 ```lisp
 (defun read-user:user (name:string)
-  "Read the user data from row indexed by `name` if the current transaction was signed by an admin. Aborts otherwise."
+  "Read the user indexed by `name` if the current tx was signed by an admin. Aborts otherwise."
   (enforce-keyset 'admins)
   (read users name))
 ```
