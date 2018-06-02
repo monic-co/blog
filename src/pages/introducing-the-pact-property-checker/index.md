@@ -34,11 +34,24 @@ To address the current state of affairs, we've built our property checking syste
 
 that must hold for _all_ possible inputs and database states.
 
+So, for example, we could write an absolute value function decorated with a property which declares that the return value must always be greater than zero:
+
+```lisp
+(defun abs:integer (x:integer)
+  ("Returns the absolute value of an integer"
+    (property (>= result 0)))
+  (if (< x 0)
+    (negate x)
+    x))
+```
+
+and the property checker will immediately inform the user that this property holds for all possible values of `x`.
+
 If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), our system is similar.
 
 We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development.
 
-To see how it works, let's go through an example.
+To see how the property checking system would be used in the real world, let's go through an example.
 
 ## An example: transferring funds
 
