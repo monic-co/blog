@@ -10,7 +10,7 @@ Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has de
 
 As a smart contract language, Pact is designed to be run within the confines of a blockchain. Users submit transactions to the network, and if a transaction is accepted into the system, the user's code will either create a new contract, or interact with a contract already deployed to the system. Each contract maintains state across interactions via a SQL-like table model for data.
 
-Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node), but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally). In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll-back) the transaction:
+Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node), but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally). In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll back) the transaction:
 
 ```lisp
 (defun read-user:user (name:string)
