@@ -1,6 +1,10 @@
 import React from 'react'
 import {parseDiff, getChangeKey, Diff} from 'react-diff-view'
 import styled from "react-emotion"
+import Prism from 'prismjs/components/prism-core'
+import 'prismjs/plugins/keep-markup/prism-keep-markup'
+import loadLanguages from 'prismjs/components/index.js'
+loadLanguages(['lisp']);
 
 require('react-diff-view/src/Change.css');
 require('react-diff-view/src/Diff.css');
@@ -162,7 +166,14 @@ export default class AnnotatedCode extends React.Component {
       <Wrapper>
         <div>{tabs}</div>
         <Description>{description}</Description>
-        <Diff hunks={hunks} viewType="unified" widgets={widgets} />
+        <Diff
+          // hack to get prism to detect the language
+          className="language-lisp"
+          hunks={hunks}
+          viewType="unified"
+          widgets={widgets}
+          onRenderCode={elem => Prism.highlightElement(elem)}
+        />
       </Wrapper>
     );
   }
