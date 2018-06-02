@@ -14,8 +14,8 @@
   (defun transfer (from:string to:string amount:integer)
     ("Transfer money between accounts"
       (properties [
-        (row-enforced 'accounts 'ks from)
-        (int-column-conserve 'accounts 'balance)
+        (row-enforced accounts 'ks from)
+        (column-conserves accounts 'balance)
         ]))
     (let ((from-bal (at 'balance (read accounts from)))
           (from-ks  (at 'ks      (read accounts from)))

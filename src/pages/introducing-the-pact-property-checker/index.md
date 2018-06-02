@@ -19,9 +19,11 @@ Like most smart contract languages, Pact is deterministic (so that the same code
   (read users name))
 ```
 
+Here you can think of the `admins` keyset as a pre-published list of the public keys for all administrators of the smart contract.
+
 ## The state of smart contract security
 
-As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every one of these exploited Ethereum contracts was written by either one of the creators of Ethereum, or a foremost Solidity expert.
+As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every one of these exploited Ethereum contracts was written by a foremost Solidity expert (or one of the creators of Ethereum!). How is a newcomer to the platform expected to author a secure contract?
 
 Though Pact was designed to make programmer errors more unlikely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
 
@@ -29,12 +31,14 @@ Though Pact was designed to make programmer errors more unlikely, between the co
 
 To address the current state of affairs, we've built our property checking system that allows programmers to decorate:
 
-- table schemas with invariants, and
-- functions with theorems
+- table schemas with "invariants", and
+- functions with "properties" (think: theorems)
 
 that must hold for _all_ possible inputs and database states.
 
-If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), the property checker shares some similarities with those systems.
+If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), the Pact property checker shares some similarities with those systems.
+
+## Some trivial examples
 
 As an example, we can decorate an absolute value function with the property that the function's return value must always be greater than or equal to zero:
 
@@ -61,13 +65,15 @@ Similarly we can place a schema invariant on a database table to ensure that an 
   ks:keyset)
 ```
 
-For this invariant, the system ensures that every function in the contract maintains the invariant on any write to a table.
+For this invariant, the system ensures that every function in the contract maintains the invariant on any write to a table with that schema.
 
-We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development.
+We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development:
+
+`TODO: SCREENSHOT GOES HERE`
 
 To see how the property checking system would be used in the real world, let's go through a longer example.
 
-## An example: transferring funds
+## A real-world example: transferring funds
 
 This is a simple contract for tracking user balances of a fictional currency. If you're familiar with Ethereum, you can think of this as simplified version of an [ERC20](https://en.wikipedia.org/wiki/ERC20) contract. For this example we're going to ignore concerns like issuance of the currency, and demonstrate only a `transfer` function to send funds between accounts.
 

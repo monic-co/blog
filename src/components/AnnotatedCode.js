@@ -82,22 +82,41 @@ const Note = styled.div`
 const pages = [
   { hunks: hunks0,
     title: 'Initial contract',
-    description: <p>Our initial smart contract. The <code>transfer</code> function checks that the sender authorized a transfer and has sufficient funds, then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.</p>,
+    description: (
+      <div>
+        <p>
+          In the initial version of our smart contract, the <code>transfer</code> function checks that the sender authorized the transfer (by signing the transaction sent to the blockchain) and that they have sufficient funds. It then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.
+        </p>
+        <p>
+          Note that we start out with one property, using <code>row-enforced</code>. This states that the row indexed by <code>name</code> must have the keyset it contains (in its <code>ks</code> column) "enforced" in every possible code path. If the function's implementation enforces the keyset, the transaction will abort if it was not signed by "owner" of that row.
+        </p>
+      </div>
+      ),
     widgets: {
-      [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of some data</Note>,
-      [getChangeKey(hunks0[0].changes[9])]: <Note>This table contains rows of accounts</Note>,
+      [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of a database row:</Note>,
+      [getChangeKey(hunks0[0].changes[9])]: <Note>We create a table which contains rows of accounts:</Note>,
+      [getChangeKey(hunks0[0].changes[14])]: <Note>Our first property on the function:</Note>,
     },
   },
   { hunks: hunks1,
     title: 'Positive balance invariant',
-    description: <p>We add an invariant that all account balances must be non-negative. Our tool responds with example inputs invalidating the invariant. And indeed, we forgot to check for a negative amount, which would allow a user drain (and overdraw) other users' accounts.</p>,
+    description: (
+      <div>
+        <p>
+          Let's add an invariant that account balances must be non-negative, because this seems like something that should always be true.
+        </p>
+        <p>
+          In response, our tool reports back with example input to the function that it claims invalidates this invariant! And indeed, we forgot to check for a negative amount. It's good we checked this, because it turns out this bug would have allowed any user to drain (and even overdraw!) other users' accounts.
+        </p>
+      </div>
+    ),
     widgets: {
       [getChangeKey(hunks1[0].changes[13])]: <Warning>(invariant) Invalidating model found: from = "" :: String, to = "" :: String, amount = -39 :: Integer</Warning>,
     },
   },
   { hunks: hunks2,
     title: 'Enforcing a positive transfer amount',
-    description: "The fix is simply to enforce that the amount is positive.",
+    description: <p>The fix to this bug is simply to <code>enforce</code> that the amount we're transferring is positive:</p>,
     widgets: {},
   },
   { hunks: hunks3,
@@ -105,10 +124,19 @@ const pages = [
     description: (
       <div>
         <p>
-          Now we add a property to check that a transfer doesn't create or destroy money out of thin air. <code>int-column-conserve</code> means "the sum of all balances in the table is preserved".
+          Now we add a property to ensure that a transfer could never possibly destroy money, or create some out of thin air. This <code>column-conserves</code> property states that "the sum of all values in the <code>balance</code> column in the <code>accounts</code> table is preserved" across any possible transaction.
         </p>
         <p>
-          This time the balance looks fine, but it's a bit suspicious that <code>from</code> and <code>to</code> are the same. But looking at the last two lines of the function, we see that, given the example inputs (<code>amount = 1</code>) we end up writing the new balance as <code>from-bal - 1</code> and the <em>overwriting</em> it with <code>to-bal + 1</code>, effectively creating $1 out of thin air.
+          The checker again reports back with an input to the function that it claims to invalidate this new mass conservation property. This time the balance (<code>1</code>) looks fine, but it's a bit suspicious that <code>from</code> and <code>to</code> are the same string.
+        </p>
+        <p>
+          <b>[ TODO TODO TODO, move this *below* the code ]</b>
+          If we look closely at the last two lines of the function, we see that, given the provided inputs (<code>amount</code> set to <code>1</code> and a sender and receiver of the same account, <code>""</code>) we end up performing the following two writes:
+        </p>
+        <code>(update accounts "" {'{'} "balance": (- from-bal 1) }) ; This write is moot.</code><br />
+        <code>(update accounts "" {'{'} "balance": (+ to-bal 1) &nbsp;&nbsp;})</code>
+        <p>
+          writing the new balance as <code>from-bal - 1</code> and immediately then <em>overwriting</em> it with <code>to-bal + 1</code>. The net effect is that this set of inputs lets an attacker create $1 out of thin air!
         </p>
       </div>
     ),
@@ -118,7 +146,7 @@ const pages = [
   },
   { hunks: hunks4,
     title: 'Another fix',
-    description: <p>We choose the easiest fix -- enforcing that the sender and recipient are not the same account.</p>,
+    description: <p>To address this bug, we can simply <code>enforce</code> that the sender and recipient are not the same account. At this point, the property checker reports that all properties and invariants are validate for all possible inputs!</p>,
     widgets: {},
   }
 ];
