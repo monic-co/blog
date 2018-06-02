@@ -34,7 +34,7 @@ To address the current state of affairs, we've built our property checking syste
 
 that must hold for _all_ possible inputs and database states.
 
-If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://rise4fun.com/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), our system is similar.
+If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), our system is similar.
 
 We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development.
 
