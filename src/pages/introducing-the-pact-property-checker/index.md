@@ -14,7 +14,7 @@ Like most smart contract languages, Pact is deterministic (so that the same code
 
 ```lisp
 (defun read-user:user (name:string)
-  "Read the user data from row indexed by `name` if the user is an admin. Aborts otherwise."
+  "Read the user data from row indexed by `name` if the current transaction was signed by an admin. Aborts otherwise."
   (enforce-keyset 'admins)
   (read users name))
 ```
@@ -34,12 +34,15 @@ To address the current state of affairs, we've built our property checking syste
 
 that must hold for _all_ possible inputs and database states.
 
-So, for example, we could write an absolute value function decorated with a property which declares that the return value must always be greater than zero:
+If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), the property checker shares some similarities with those systems.
+
+As an example, we can decorate an absolute value function with the property that the function's return value must always be greater than or equal to zero:
 
 ```lisp
 (defun abs:integer (x:integer)
   ("Returns the absolute value of an integer"
     (property (>= result 0)))
+
   (if (< x 0)
     (negate x)
     x))
@@ -47,11 +50,22 @@ So, for example, we could write an absolute value function decorated with a prop
 
 and the property checker will immediately inform the user that this property holds for all possible values of `x`.
 
-If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), our system is similar.
+Similarly we can place a schema invariant on a database table to ensure that an account balance must always be positive:
+
+```lisp
+(defschema account
+  ("A user account"
+    (invariant (>= balance 0)))
+
+  balance:integer
+  ks:keyset)
+```
+
+For this invariant, the system ensures that every function in the contract maintains the invariant on any write to a table.
 
 We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development.
 
-To see how the property checking system would be used in the real world, let's go through an example.
+To see how the property checking system would be used in the real world, let's go through a longer example.
 
 ## An example: transferring funds
 
@@ -63,9 +77,9 @@ This is a simple contract for tracking user balances of a fictional currency. If
 
 We translate Pact code into a set of constraints for an [SMT solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) (we used Microsoft's [Z3](https://github.com/Z3Prover/z3)). We then ask for a set of inputs that results in a violated invariant or property. There are three possible results:
 
-* The solver returns, having satisfied the constraints. This means that there is a set of inputs violating the property / invariant. We display it for the user like in the example.
-* The solver returns and says that the constraints are impossible to satisfy. This means that the property / invariant is valid.
-* The solver times out. This means that we can't tell whether the property / invariant is valid without waiting for longer. The search we're asking Z3 to do is decidable, but it's pretty easy to make it take a very long time. This hasn't been a real problem for any contracts we've analyzed so far.
+* The solver returns, having satisfied the constraints. This means that there is a set of inputs violating the property or invariant. We display it for the user like in the example.
+* The solver returns and says that the constraints are impossible to satisfy. This means that the property or invariant is valid.
+* The solver times out. This means that we can't tell whether the property or invariant is valid without waiting for longer. The search we're asking Z3 to do is decidable, but it's pretty easy to make it take a very long time. This hasn't been a real problem for any contracts we've analyzed so far.
 
 The two most important tools we use are Z3 itself, and the [SBV](http://leventerkok.github.io/sbv/) (SMT Based Verification) library by Levent Erkök, which provides a high-level Haskell interface to SMT solvers.
 
