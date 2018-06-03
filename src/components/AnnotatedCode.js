@@ -136,7 +136,7 @@ const pages = [
         <code>(update accounts "" {'{'} "balance": (- from-bal 1) }) ; This write is moot.</code><br />
         <code>(update accounts "" {'{'} "balance": (+ to-bal 1) &nbsp;&nbsp;})</code>
         <p>
-          writing the new balance as <code>from-bal - 1</code> and immediately then <em>overwriting</em> it with <code>to-bal + 1</code>. The net effect is that this set of inputs lets an attacker create $1 out of thin air!
+          which first update the balance to be <code>from-bal - 1</code>, and immediately then <em>overwrite that value</em> with <code>to-bal + 1</code>. The net effect is that this set of inputs lets an attacker create $1 out of thin air!
         </p>
       </div>
     ),
@@ -146,7 +146,7 @@ const pages = [
   },
   { hunks: hunks4,
     title: 'Another fix',
-    description: <p>To address this bug, we can simply <code>enforce</code> that the sender and recipient are not the same account. At this point, the property checker reports that all properties and invariants are validate for all possible inputs!</p>,
+    description: <p>To address this bug, we can simply <code>enforce</code> that the sender and recipient are not the same account. At this point, the property checker reports that all properties and invariants validate for all possible inputs!</p>,
     widgets: {},
   }
 ];
