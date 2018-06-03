@@ -100,7 +100,7 @@ We start with the terms of the language. This is a stringly-typed language, some
 * `Query`: query from the database using SQL syntax.
 * `Const`: a string literal
 * `Concat`: concatenate two strings
-* `ReadVar`: read a variable in scope. Since our language is stringly typed we can use dynamic variables names:
+* `ReadVar`: read a variable in scope. Since our language is stringly-typed we can use dynamic variables:
   - `ReadVar (Concat "user_" "name")`
   - `ReadVar (Concat "user_" (ReadVar "category"))`
   - `ReadVar (Query "SELECT var FROM vars WHERE id=5")`
