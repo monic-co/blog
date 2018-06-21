@@ -1,13 +1,11 @@
 import React from 'react'
 
-import profilePic from './profile-pic.jpg'
+import profilePic from './me4.jpeg'
 
 export default function Bio() {
   return (
     <div
-      style={{
-        display: 'flex',
-      }}
+      style={{ display: 'flex' }}
     >
       <img
         src={profilePic}
@@ -16,10 +14,19 @@ export default function Bio() {
           marginBottom: 0,
           width: "100px",
           height: "100px",
+          borderRadius: "50%",
         }}
       />
-      <p>
-        <strong>Joel Burget</strong>, cofounder{' '}
+      <p
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          marginLeft: 25,
+        }}
+      >
+        <strong>Joel Burget</strong>
+        cofounder{' '}
       </p>
     </div>
   )

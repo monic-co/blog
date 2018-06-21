@@ -6,7 +6,6 @@ import rehypeReact from "rehype-react";
 
 import AnnotatedCode from '../components/AnnotatedCode'
 import Bio from '../components/Bio'
-// import { rhythm, scale } from '../utils/typography'
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
@@ -15,12 +14,16 @@ const renderAst = new rehypeReact({
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
-    const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    const { previous, next } = this.props.pathContext
+    const {data,pathContext} = this.props
+    const post = data.markdownRemark
+    const siteTitle = get(data, 'site.siteMetadata.title')
+    const { previous, next } = pathContext
 
     return (
-      <div>
+      <div
+        style={{
+          marginBottom: 200,
+        }}>
         <Helmet title={`${post.frontmatter.title} | ${siteTitle}`} />
         <h1 style={{
           fontFamily: 'Nunino, sans-serif',
@@ -30,11 +33,8 @@ class BlogPostTemplate extends React.Component {
         </h1>
         <p
           style={{
-            // ...scale(-1 / 5),
             display: 'block',
             marginBottom: '50px',
-            // marginBottom: rhythm(1),
-            // marginTop: rhythm(-1),
           }}
         >
           {post.frontmatter.date}
