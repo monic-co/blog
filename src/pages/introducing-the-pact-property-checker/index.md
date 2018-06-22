@@ -227,4 +227,22 @@ That's it! The `GOOD` lines are a translation of our program. `(assert s7)` is s
 
 ## Future directions
 
-TODO which things to mention
+We're actively developing this tool and very excited for the projects we have planned.
+
+### Abstracting properties
+
+Currently there's no way to define a new property. Where we mean "conserves mass" we have to write `(= (column-delta table 'column) 0)`. Soon you'll be able to define new properties with `(defproperty conserves-mass (= (column-delta table 'column) 0)`.
+
+### Improved UX
+
+Right now we show the inputs to a function, but as we've seen, there's still some work left to the user. You need to step through line-by-line to understand what those inputs mean for your code. Worse, we don't show values read from the database.
+
+We plan to improve this experience by showing a line-by-line trace of values, similar to what a debugger like the Chrome devtools debugger might show. We'll write more about this in an upcoming post.
+
+### Covering all of the language
+
+Right now we punt on some parts of the language that are hard to model in z3. In particular, we're actively working on adding support for properties of lists.
+
+### Stronger defaults
+
+We've shown that it's possible to write a `pure` property, meaning that some function doesn't read, write, or abort. Our plan is to make something like this the default, so that all non-pure code must be explicitly marked.
