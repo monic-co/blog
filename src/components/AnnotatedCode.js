@@ -151,58 +151,25 @@ const pages = [
   }
 ];
 
-export default class AnnotatedCode extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { tabIndex: 0 };
-  }
+export default function AnnotatedCode() {
+  let renderedPages = pages.map(({hunks, description, widgets, title}, index) => (
+    <Wrapper>
+      <h2>{title}</h2>
+      <Description>{description}</Description>
+      <Diff
+        // hack to get prism to detect the language
+        className="language-lisp"
+        hunks={hunks}
+        viewType="unified"
+        widgets={widgets}
+        onRenderCode={elem => Prism.highlightElement(elem)}
+      />
+    </Wrapper>
+  ));
 
-  componentDidMount() {
-    document.onkeydown = e => {
-      switch (e.keyCode) {
-        case 37: // left arrow
-          this.setState(({tabIndex}) =>
-            ({tabIndex: Math.max(tabIndex - 1, 0)})
-          );
-          break;
-        case 39: // right arrow
-          this.setState(({tabIndex}) =>
-            ({tabIndex: Math.min(tabIndex + 1, pages.length - 1)})
-          );
-          break;
-      }
-    };
-  }
-
-  render() {
-    let {tabIndex} = this.state;
-    let {hunks, description, widgets} = pages[tabIndex];
-
-    let tabs = (
-      <Selectors>
-        {pages.map(({title}, index) =>
-          <Button
-            key={index}
-            selected={index == tabIndex}
-            onClick={() => this.setState({tabIndex: index})}
-          >{index + ': ' + title}</Button>
-        )}
-      </Selectors>
-    );
-
-    return (
-      <Wrapper>
-        <div>{tabs}</div>
-        <Description>{description}</Description>
-        <Diff
-          // hack to get prism to detect the language
-          className="language-lisp"
-          hunks={hunks}
-          viewType="unified"
-          widgets={widgets}
-          onRenderCode={elem => Prism.highlightElement(elem)}
-        />
-      </Wrapper>
-    );
-  }
+  return (
+    <div>
+      {renderedPages}
+    </div>
+  );
 }
