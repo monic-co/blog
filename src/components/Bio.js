@@ -25,7 +25,7 @@ export default function Bio() {
           marginLeft: 25,
         }}
       >
-        <strong>Joel Burget</strong>
+        <strong><a href="https://www.monic.co/about/">Joel Burget</a></strong>
         cofounder{' '}
       </p>
     </div>
