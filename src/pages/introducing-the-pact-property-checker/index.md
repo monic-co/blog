@@ -69,7 +69,7 @@ For this invariant, the system ensures that every function in the contract maint
 
 We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development:
 
-`TODO: SCREENSHOT GOES HERE`
+<img src="shot.png" />
 
 To see how the property checking system would be used in the real world, let's go through a longer example.
 
