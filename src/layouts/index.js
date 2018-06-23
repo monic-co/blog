@@ -16,9 +16,26 @@ injectGlobal`
     font-family: proxima-nova, Nunino, sans-serif;
   }
 
-  h2, h3 {
-    font-weight: 300;
+  main h1, h2, h3 {
+    font-family: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera San;
+    font-weight: 400;
     margin: 60px 0 30px;
+    text-rendering: geometricPrecision;
+  }
+
+  main h1::before {
+    content: '# ';
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  h2::before {
+    content: '## ';
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  h3::before {
+    content: '### ';
+    color: rgba(0, 0, 0, 0.5);
   }
 
   p, ul {
@@ -61,7 +78,7 @@ const Monic = styled.span`
   letter-spacing: 2px;
 `;
 
-const H1 = styled.h1`
+const HeadH1 = styled.h1`
   font-family: Nunino, sans-serif;
   font-weight: 300;
   margin-top: 0;
@@ -77,7 +94,7 @@ export default class Template extends React.Component {
     return (
       <div>
         <Header>
-          <H1>
+          <HeadH1>
             <Link
               style={{
                 boxShadow: 'none',
@@ -90,7 +107,7 @@ export default class Template extends React.Component {
               {' '}
               Blog
             </Link>
-          </H1>
+          </HeadH1>
         </Header>
         <Main>{children()}</Main>
       </div>

@@ -74,14 +74,14 @@ const Description = styled.div`
 
 const Note = styled.div`
   font-family: Consolas, Courier, monospace;
-  margin-left: 123px;
-  border-left: 1px solid white;
+  margin-left: 124px;
   padding: 10px 0 5px 20px;
+  border-left: 5px solid white;
 `;
 
 const pages = [
   { hunks: hunks0,
-    title: 'Initial contract',
+    title: 'initial contract',
     preDescription: (
       <div>
         <p>
@@ -100,14 +100,14 @@ const pages = [
     },
   },
   { hunks: hunks1,
-    title: 'Positive balance invariant',
+    title: 'positive balance invariant',
     preDescription: (
       <div>
         <p>
-          Let's add an invariant that account balances must be non-negative, because this seems like something that should always be true.
+          Let's add an invariant that account balances must be non-negative, to prevent overdrawn accounts.
         </p>
         <p>
-          In response, our tool reports back with example input to the function that it claims invalidates this invariant! And indeed, we forgot to check for a negative amount. It's good we checked this, because it turns out this bug would have allowed any user to drain (and even overdraw!) other users' accounts.
+          After we add the invariant, our tool reports back with example input to the function that it claims invalidates this invariant! And indeed, we forgot to check for a negative amount. It's good we checked this, because it turns out this bug would have allowed any user to drain (and even overdraw!) other users' accounts.
         </p>
       </div>
     ),
@@ -117,13 +117,13 @@ const pages = [
     },
   },
   { hunks: hunks2,
-    title: 'Enforcing a positive transfer amount',
+    title: 'enforcing a positive transfer amount',
     preDescription: <p>The fix to this bug is simply to <code>enforce</code> that the amount we're transferring is positive:</p>,
     postDescription: '',
     widgets: {},
   },
   { hunks: hunks3,
-    title: 'Column conservation',
+    title: 'column conservation',
     preDescription: (
       <div>
         <p>
@@ -151,7 +151,7 @@ const pages = [
     },
   },
   { hunks: hunks4,
-    title: 'Another fix',
+    title: 'another fix',
     preDescription: <p>To address this bug, we can simply <code>enforce</code> that the sender and recipient are not the same account. At this point, the property checker reports that all properties and invariants validate for all possible inputs!</p>,
     postDescription: '',
     widgets: {},
@@ -161,7 +161,7 @@ const pages = [
 export default function AnnotatedCode() {
   let renderedPages = pages.map(({hunks, preDescription, postDescription, widgets, title}, index) => (
     <Wrapper>
-      <h2>{title}</h2>
+      <h2>Step {index + 1}: {title}</h2>
       <Description>{preDescription}</Description>
       <Diff
         // hack to get prism to detect the language

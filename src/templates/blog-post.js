@@ -3,6 +3,8 @@ import Helmet from 'react-helmet'
 import Link from 'gatsby-link'
 import get from 'lodash/get'
 import rehypeReact from "rehype-react";
+import loadLanguages from 'prismjs/components/index.js'
+loadLanguages(['lisp']);
 
 import AnnotatedCode from '../components/AnnotatedCode'
 import Bio from '../components/Bio'
@@ -25,12 +27,7 @@ class BlogPostTemplate extends React.Component {
           marginBottom: 200,
         }}>
         <Helmet title={`${post.frontmatter.title} | ${siteTitle}`} />
-        <h1 style={{
-          fontFamily: 'Nunino, sans-serif',
-          fontWeight: 300,
-        }}>
-          {post.frontmatter.title}
-        </h1>
+        <h1>{post.frontmatter.title}</h1>
         <p
           style={{
             display: 'block',

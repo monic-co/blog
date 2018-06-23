@@ -4,7 +4,7 @@ date: 2018-05-17 13:16:01
 tags:
 ---
 
-Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the "property checker". In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
+Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the *property checker*. In this post we'll talk about the purpose of our tool, what it can do today, and what we have planned for the future.
 
 ## Pact: some background
 
@@ -19,28 +19,28 @@ Like most smart contract languages, Pact is deterministic (so that the same code
   (read users name))
 ```
 
-Here you can think of the `admins` keyset as a pre-published list of the public keys for all administrators of the smart contract.
+Here you can think of the `admins` *keyset* as a pre-published list of the public keys for all administrators of the smart contract.
 
 ## The state of smart contract security
 
-As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every one of these exploited Ethereum contracts was written by a foremost Solidity expert (or one of the creators of Ethereum!). How is a newcomer to the platform expected to author a secure contract?
+As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every exploited high-profile Ethereum contract was written by a foremost Solidity expert (or one of the creators of Ethereum!). How is a newcomer to the platform expected to author a secure contract?
 
-Though Pact was designed to make programmer errors more unlikely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
+Though Pact was designed to make programmer errors less likely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
 
 ## The Pact property checker
 
-To address the current state of affairs, we've built our property checking system that allows programmers to decorate:
+To address the current state of affairs, we've built our property checking system that allows programmers to decorate both
 
-- table schemas with "invariants", and
-- functions with "properties" (think: theorems)
+- table schemas with *invariants*, and
+- functions with *properties* (think: theorems)
 
 that must hold for _all_ possible inputs and database states.
 
-If you're familiar with the notion of contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or the style of refinement types afforded by [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/), the Pact property checker shares some similarities with those systems.
+The Pact property checker shares some similarities with contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/)-style refinement types,
 
-## Some trivial examples
+## Some simple examples
 
-As an example, we can decorate an absolute value function with the property that the function's return value must always be greater than or equal to zero:
+As an example, we can decorate an absolute value function with the property that the function's return value must always be non-negative:
 
 ```lisp
 (defun abs:integer (x:integer)
@@ -52,7 +52,7 @@ As an example, we can decorate an absolute value function with the property that
     x))
 ```
 
-and the property checker will immediately inform the user that this property holds for all possible values of `x`.
+and the property checker verifies that this property holds for all possible values of `x`.
 
 Similarly we can place a schema invariant on a database table to ensure that an account balance must always be positive:
 
@@ -75,13 +75,13 @@ To see how the property checking system would be used in the real world, let's g
 
 ## A real-world example: transferring funds
 
-This is a simple contract for tracking user balances of a fictional currency. If you're familiar with Ethereum, you can think of this as simplified version of an [ERC20](https://en.wikipedia.org/wiki/ERC20) contract. For this example we're going to ignore concerns like issuance of the currency, and demonstrate only a `transfer` function to send funds between accounts.
+We'll write a simple contract for tracking user balances of a fictional currency. If you're familiar with Ethereum, you can think of this as simplified version of an [ERC20](https://en.wikipedia.org/wiki/ERC20) contract. For this example we're going to ignore concerns like issuance of the currency, and demonstrate only a `transfer` function to send funds between accounts.
 
 <annotated-code></annotated-code>
 
 ## How does it work?
 
-We translate Pact code into a set of constraints for an [SMT solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) (we used Microsoft's [Z3](https://github.com/Z3Prover/z3)). We then ask for a set of inputs that results in a violated invariant or property. There are three possible results:
+We translate Pact code into a set of [SMT solver](https://en.wikipedia.org/wiki/Satisfiability_modulo_theories) constraints (we used Microsoft's [Z3](https://github.com/Z3Prover/z3)). We then ask for a set of inputs that results in a violated invariant or property. There are three possible results:
 
 * The solver returns, having satisfied the constraints. This means that there is a set of inputs violating the property or invariant. We display it for the user like in the example.
 * The solver returns and says that the constraints are impossible to satisfy. This means that the property or invariant is valid.
@@ -241,7 +241,7 @@ We plan to improve this experience by showing a line-by-line trace of values, si
 
 ### Covering all of the language
 
-Right now we punt on some parts of the language that are hard to model in z3. In particular, we're actively working on adding support for properties of lists.
+Right now we punt on some parts of the language that are hard to model in z3. In particular, we're actively working on adding support for lists.
 
 ### Stronger defaults
 
@@ -249,4 +249,4 @@ We've shown that it's possible to write a `pure` property, meaning that some fun
 
 ## More to come
 
-Those were just a few of the projects we have on our roadmap. We're working to make this a great environment for writing correct contracts. Of course, there's a lot to do, and we're hiring, so if you made it this far and you're interested in our work, [get in touch](mailto:joel@monic.co).
+Those were just a few of the projects we have on our roadmap, as we work towards a great environment for writing correct contracts. Of course, there's a lot to do, and we're hiring, so if you made it this far and you're interested in our work, [get in touch](mailto:joel@monic.co).
