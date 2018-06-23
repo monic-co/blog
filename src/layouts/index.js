@@ -23,21 +23,6 @@ injectGlobal`
     text-rendering: geometricPrecision;
   }
 
-  main h1::before {
-    content: '# ';
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  h2::before {
-    content: '## ';
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  h3::before {
-    content: '### ';
-    color: rgba(0, 0, 0, 0.5);
-  }
-
   p, ul {
     font-size: 14pt;
     line-height: 1.55;
@@ -52,8 +37,27 @@ injectGlobal`
     font-size: 11pt;
   }
 
-  a {
+  main a, main button {
+    color: #0a2e6b;
     text-decoration: none;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    border-bottom: 1px solid rgba(252,51,89,0.4);
+    display: inline-block;
+    height: 24px;
+    background-color: transparent;
+    transition: 0.48s border-bottom-color ease-out;
+  }
+
+  main a:hover, main button:hover {
+    border-bottom-color: #FC3359;
+  }
+
+  main a:hover, main a:active,
+  main button:hover, main button:active {
+    outline: none;
+    transition-duration: 0s;
   }
 
   ::selection {
