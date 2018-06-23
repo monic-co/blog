@@ -17,8 +17,8 @@ injectGlobal`
   }
 
   main h1, h2, h3 {
-    font-family: Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera San;
-    font-weight: 400;
+    font-family: proxima-nova, Nunino, sans-serif;
+    font-weight: 300;
     margin: 60px 0 30px;
     text-rendering: geometricPrecision;
   }
