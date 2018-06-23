@@ -82,7 +82,7 @@ const Note = styled.div`
 const pages = [
   { hunks: hunks0,
     title: 'Initial contract',
-    description: (
+    preDescription: (
       <div>
         <p>
           In the initial version of our smart contract, the <code>transfer</code> function checks that the sender authorized the transfer (by signing the transaction sent to the blockchain) and that they have sufficient funds. It then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.
@@ -92,6 +92,7 @@ const pages = [
         </p>
       </div>
       ),
+      postDescription: '',
     widgets: {
       [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of a database row:</Note>,
       [getChangeKey(hunks0[0].changes[9])]: <Note>We create a table which contains rows of accounts:</Note>,
@@ -100,7 +101,7 @@ const pages = [
   },
   { hunks: hunks1,
     title: 'Positive balance invariant',
-    description: (
+    preDescription: (
       <div>
         <p>
           Let's add an invariant that account balances must be non-negative, because this seems like something that should always be true.
@@ -110,18 +111,20 @@ const pages = [
         </p>
       </div>
     ),
+    postDescription: '',
     widgets: {
       [getChangeKey(hunks1[0].changes[13])]: <Warning>(invariant) Invalidating model found: from = "" :: String, to = "" :: String, amount = -39 :: Integer</Warning>,
     },
   },
   { hunks: hunks2,
     title: 'Enforcing a positive transfer amount',
-    description: <p>The fix to this bug is simply to <code>enforce</code> that the amount we're transferring is positive:</p>,
+    preDescription: <p>The fix to this bug is simply to <code>enforce</code> that the amount we're transferring is positive:</p>,
+    postDescription: '',
     widgets: {},
   },
   { hunks: hunks3,
     title: 'Column conservation',
-    description: (
+    preDescription: (
       <div>
         <p>
           Now we add a property to ensure that a transfer could never possibly destroy money, or create some out of thin air. This <code>column-conserves</code> property states that "the sum of all values in the <code>balance</code> column in the <code>accounts</code> table is preserved" across any possible transaction.
@@ -129,8 +132,11 @@ const pages = [
         <p>
           The checker again reports back with an input to the function that it claims to invalidate this new mass conservation property. This time the balance (<code>1</code>) looks fine, but it's a bit suspicious that <code>from</code> and <code>to</code> are the same string.
         </p>
+      </div>
+    ),
+    postDescription: (
+      <div>
         <p>
-          <b>[ TODO TODO TODO, move this *below* the code ]</b>
           If we look closely at the last two lines of the function, we see that, given the provided inputs (<code>amount</code> set to <code>1</code> and a sender and receiver of the same account, <code>""</code>) we end up performing the following two writes:
         </p>
         <code>(update accounts "" {'{'} "balance": (- from-bal 1) }) ; This write is moot.</code><br />
@@ -146,16 +152,17 @@ const pages = [
   },
   { hunks: hunks4,
     title: 'Another fix',
-    description: <p>To address this bug, we can simply <code>enforce</code> that the sender and recipient are not the same account. At this point, the property checker reports that all properties and invariants validate for all possible inputs!</p>,
+    preDescription: <p>To address this bug, we can simply <code>enforce</code> that the sender and recipient are not the same account. At this point, the property checker reports that all properties and invariants validate for all possible inputs!</p>,
+    postDescription: '',
     widgets: {},
   }
 ];
 
 export default function AnnotatedCode() {
-  let renderedPages = pages.map(({hunks, description, widgets, title}, index) => (
+  let renderedPages = pages.map(({hunks, preDescription, postDescription, widgets, title}, index) => (
     <Wrapper>
       <h2>{title}</h2>
-      <Description>{description}</Description>
+      <Description>{preDescription}</Description>
       <Diff
         // hack to get prism to detect the language
         className="language-lisp"
@@ -164,6 +171,7 @@ export default function AnnotatedCode() {
         widgets={widgets}
         onRenderCode={elem => Prism.highlightElement(elem)}
       />
+      <Description>{postDescription}</Description>
     </Wrapper>
   ));
 
