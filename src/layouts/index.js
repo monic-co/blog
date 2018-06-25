@@ -92,6 +92,7 @@ const HeaderBoxRight = styled.div`
 const Main = styled.main`
   max-width: 1000px;
   margin: auto;
+  padding: 3vw;
 `;
 
 const Monic = styled.span`
