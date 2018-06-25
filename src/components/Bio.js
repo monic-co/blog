@@ -1,6 +1,6 @@
 import React from 'react'
 
-import profilePic from './me4.jpeg'
+import profilePic from './profile-pic.jpg'
 
 export default function Bio() {
   return (
