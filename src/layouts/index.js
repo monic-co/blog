@@ -39,7 +39,7 @@ injectGlobal`
     font-size: 11pt;
   }
 
-  main a, main button {
+  main a:not(.gatsby-resp-image-link), main button {
     color: #0a2e6b;
     text-decoration: none;
     cursor: pointer;
@@ -52,11 +52,11 @@ injectGlobal`
     transition: 0.48s border-bottom-color ease-out;
   }
 
-  main a:hover, main button:hover {
+  main a:not(.gatsby-resp-image-link):hover, main button:hover {
     border-bottom-color: #FC3359;
   }
 
-  main a:hover, main a:active,
+  main a:not(.gatsby-resp-image-link):hover, main a:not(.gatsby-resp-image-link):active,
   main button:hover, main button:active {
     outline: none;
     transition-duration: 0s;
