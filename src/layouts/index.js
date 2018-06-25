@@ -3,6 +3,8 @@ import Link from 'gatsby-link'
 import { fontFace, injectGlobal } from "emotion"
 import styled from "react-emotion"
 
+require("./theme.css");
+
 injectGlobal`
   * {
     margin: 0;
@@ -68,8 +70,23 @@ injectGlobal`
 
 const Header = styled.header`
   margin: 3vw auto;
+  padding-left: 3vw;
+  padding-right: 3vw;
   display: flex;
   justify-content: center;
+  width: auto;
+  max-width: 1280px;
+`;
+
+const HeaderBoxLeft = styled.div`
+  flex: 1 1 0px;
+  margin-bottom: 100px;
+`;
+
+const HeaderBoxRight = styled.div`
+  flex: 1 1 0px;
+  text-align: right;
+  justify-content: flex-end;
 `;
 
 const Main = styled.main`
@@ -83,13 +100,33 @@ const Monic = styled.span`
 `;
 
 const HeadH1 = styled.h1`
-  font-family: Nunino, sans-serif;
-  font-weight: 300;
-  margin-top: 0;
-  margin-bottom: 100px;
+  font-family: europa, Nunino, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  letter-spacing: .04em;
+  text-transform: none;
+  line-height: 1em;
 `;
 
-require("./theme.css");
+const HeadItem = styled.div`
+  display: inline-block;
+  font-family: Arial,Helvetica,sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: .05em;
+  text-transform: none;
+  line-height: 1em;
+  text-rendering: optimizeLegibility;
+  box-flex: 1;
+  flex: 1 1 0px;
+`;
+
+const HeadLink = styled.a`
+  text-decoration: none;
+  color: #0a2e6b;
+`;
 
 export default class Template extends React.Component {
   render() {
@@ -98,20 +135,31 @@ export default class Template extends React.Component {
     return (
       <div>
         <Header>
-          <HeadH1>
-            <Link
-              style={{
-                boxShadow: 'none',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-              to="/"
-            >
-              <Monic>MONIC</Monic>
-              {' '}
-              Blog
-            </Link>
-          </HeadH1>
+          <HeaderBoxLeft>
+            <HeadH1>
+              <Link
+                style={{
+                  boxShadow: 'none',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+                to="/"
+              >
+                <Monic>MONIC</Monic>
+              </Link>
+            </HeadH1>
+          </HeaderBoxLeft>
+          <HeaderBoxRight>
+            <HeadItem>
+              <HeadLink href="https://www.monic.co/about">About</HeadLink>
+            </HeadItem>
+            <HeadItem style={{marginLeft: '18px'}}>
+              <HeadLink href="/">Blog</HeadLink>
+            </HeadItem>
+            <HeadItem style={{marginLeft: '18px'}}>
+              <HeadLink href="https://www.monic.co/contact">Contact</HeadLink>
+            </HeadItem>
+          </HeaderBoxRight>
         </Header>
         <Main>{children()}</Main>
       </div>
