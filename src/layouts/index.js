@@ -129,6 +129,15 @@ const HeadLink = styled.a`
   color: #0a2e6b;
 `;
 
+function Link_({ to, children }) {
+  return (
+    <Link
+      style={{textDecoration: 'none', color: '#0a2e6b'}}
+      to={to}
+    >{children}</Link>
+  );
+}
+
 export default class Template extends React.Component {
   render() {
     const { children } = this.props
@@ -138,16 +147,9 @@ export default class Template extends React.Component {
         <Header>
           <HeaderBoxLeft>
             <HeadH1>
-              <Link
-                style={{
-                  boxShadow: 'none',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                }}
-                to="/"
-              >
+              <HeadLink href="https://www.monic.co">
                 <Monic>MONIC</Monic>
-              </Link>
+              </HeadLink>
             </HeadH1>
           </HeaderBoxLeft>
           <HeaderBoxRight>
@@ -155,7 +157,7 @@ export default class Template extends React.Component {
               <HeadLink href="https://www.monic.co/about">About</HeadLink>
             </HeadItem>
             <HeadItem style={{marginLeft: '18px'}}>
-              <HeadLink href="/">Blog</HeadLink>
+              <Link_ to="/">Blog</Link_>
             </HeadItem>
             <HeadItem style={{marginLeft: '18px'}}>
               <HeadLink href="https://www.monic.co/contact">Contact</HeadLink>
