@@ -8,7 +8,7 @@ Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has de
 
 ## Pact: some background
 
-As a smart contract language, Pact is designed to be run within the confines of a blockchain. Users submit transactions to the network, and if a transaction is accepted into the system, the user's code will either create a new contract, or interact with a contract already deployed to the system. Each contract maintains state across interactions via a SQL-like table model for data.
+As a smart contract language, Pact is designed to be run within the confines of a blockchain. If you're not completely familiar with how smart contracts work, it's helpful to understand them as autonomous agents with which users interact. A user submits a transaction to the network, and if accepted into the system, this will either create a new contract, or interact with an existing one already deployed to the system. In Pact, each contract maintains state across interactions via a SQL-like table model for data.
 
 Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node), but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally). In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll back) the transaction:
 
@@ -36,7 +36,7 @@ To address the current state of affairs, we've built our property checking syste
 
 that must hold for _all_ possible inputs and database states.
 
-The Pact property checker shares some similarities with contracts (note: not smart contracts!) from [Dafny](https://github.com/Microsoft/dafny), or [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/)-style refinement types,
+The Pact property checker shares some similarities with contracts (note: not smart contracts!) from e.g. [Dafny](https://github.com/Microsoft/dafny) and [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/)-style refinement types.
 
 ## Some simple examples
 
