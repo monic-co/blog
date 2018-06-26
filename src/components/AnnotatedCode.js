@@ -40,9 +40,7 @@ const Wrapper = styled.div`
   // the next two rules have the effect of removing the line number columns
   td.diff-gutter {
     visibility: collapse;
-  }
-  table.diff {
-    margin-left: -14ch;
+    width: 0;
   }
 
   tr.diff-hunk-header {
@@ -53,8 +51,8 @@ const Wrapper = styled.div`
 const Warning = styled.div`
   background-color: #ffffc6;
   font-family: Consolas, Courier, monospace;
-  margin-left: 123px;
-  border-left: 1px solid white;
+  margin-left: 0;
+  border-left: 5px solid white;
   padding: 10px 0 5px 20px;
 `;
 
@@ -74,7 +72,7 @@ const Description = styled.div`
 
 const Note = styled.div`
   font-family: Consolas, Courier, monospace;
-  margin-left: 124px;
+  margin-left: 0;
   padding: 10px 0 5px 20px;
   border-left: 5px solid white;
 `;
@@ -164,6 +162,7 @@ export default function AnnotatedCode() {
       <h2>Step {index + 1}: {title}</h2>
       <Description>{preDescription}</Description>
       <Diff
+        hideGutter={true}
         // hack to get prism to detect the language
         className="language-lisp"
         hunks={hunks}
