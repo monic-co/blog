@@ -1,15 +1,17 @@
 import React from 'react'
-import {parseDiff, getChangeKey, Diff} from 'react-diff-view'
+import {parseDiff} from '../../react-diff-view/src/parse'
+import {getChangeKey} from '../../react-diff-view/src/utils'
+import Diff from '../../react-diff-view/src/Diff'
 import styled from "react-emotion"
 import Prism from 'prismjs/components/prism-core'
 import 'prismjs/plugins/keep-markup/prism-keep-markup'
 import loadLanguages from 'prismjs/components/index.js'
 loadLanguages(['lisp']);
 
-require('react-diff-view/src/Change.css');
-require('react-diff-view/src/Diff.css');
-require('react-diff-view/src/Hunk.css');
-require('react-diff-view/src/Widget.css');
+require('../../react-diff-view/src/Change.css');
+require('../../react-diff-view/src/Diff.css');
+require('../../react-diff-view/src/Hunk.css');
+require('../../react-diff-view/src/Widget.css');
 
 import diffnull0 from
   'raw-loader!../pages/introducing-the-pact-property-checker/steps/diffnull0';
