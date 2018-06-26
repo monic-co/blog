@@ -240,7 +240,7 @@ We plan to improve this experience by showing a line-by-line trace of values, si
 
 ### Covering all of the language
 
-Right now we punt on some parts of the language that are harder to model in Z3. In particular, we're actively working on adding [support for sequences to sbv](https://github.com/LeventErkok/sbv/pull/394) to model lists in Pact.
+For the initial release, we punted on some parts of the language that are harder to model in Z3. In particular, we're actively working on adding [support for sequences to sbv](https://github.com/LeventErkok/sbv/pull/394) to model lists in Pact.
 
 ### Stronger defaults
 
