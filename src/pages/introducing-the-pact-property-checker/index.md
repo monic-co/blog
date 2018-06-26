@@ -244,7 +244,7 @@ Right now we punt on some parts of the language that are harder to model in Z3. 
 
 ### Stronger defaults
 
-We've shown that it's possible to write a `pure` property, meaning that some function doesn't modify database state. Our plan is to make something like this the default, so that all non-pure code must be explicitly marked.
+Once we have `defproperty`, we'll have all of the necessary building blocks to write a `pure` property, asserting that a function doesn't read or write the database, or abort the current transaction. Our plan is to make something like this the default, so that all non-pure code must be explicitly marked.
 
 ## More to come
 
