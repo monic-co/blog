@@ -68,7 +68,7 @@ Similarly we can place a schema invariant on a database table to ensure that an 
 
 For this invariant, the system ensures that every function in the contract maintains the invariant on any write to a table with that schema.
 
-We've also built editor integration into [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development:
+We've also built editor integration for [Atom](https://atom.io/) that verifies these invariants and properties whenever a smart contract is modified during development:
 
 <img src="shot.png" />
 
