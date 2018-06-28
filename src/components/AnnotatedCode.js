@@ -115,7 +115,7 @@ const pages = [
     widgets: {
       [getChangeKey(hunks1[0].changes[13])]: (
 <Warning><code><pre>{`
-test.pact:16:0:Warning: Invalidating model found:
+Invalidating model found:
   Arguments:
     from := ""
     to := ""
@@ -177,7 +177,7 @@ test.pact:16:0:Warning: Invalidating model found:
     widgets: {
       [getChangeKey(hunks3[0].changes[16])]: (
 <Warning><code><pre>{`
-test.pact:20:6:Warning: Invalidating model found:
+Invalidating model found:
   Arguments:
     from := ""
     to := ""
