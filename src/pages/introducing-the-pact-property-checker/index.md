@@ -45,7 +45,7 @@ As an example, we can decorate an absolute value function with the property that
 
 ```lisp
 (defun abs:integer (x:integer)
-  ("Returns the absolute value of an integer"
+  (meta "Returns the absolute value of an integer"
     (property (>= result 0)))
 
   (if (< x 0)
@@ -59,7 +59,7 @@ Similarly we can place a schema invariant on a database table to ensure that an 
 
 ```lisp
 (defschema account
-  ("A user account"
+  (meta "A user account"
     (invariant (>= balance 0)))
 
   balance:integer
