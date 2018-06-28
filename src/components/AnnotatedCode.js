@@ -94,9 +94,9 @@ const pages = [
       ),
       postDescription: '',
     widgets: {
-      [getChangeKey(hunks0[0].changes[5])]: <Note>A schema describes the shape of a database row:</Note>,
-      [getChangeKey(hunks0[0].changes[9])]: <Note>We create a table which contains rows of accounts:</Note>,
-      [getChangeKey(hunks0[0].changes[14])]: <Note>Our first property on the function:</Note>,
+      [getChangeKey(hunks0[0].changes[7])]: <Note>A schema describes the shape of a database row:</Note>,
+      [getChangeKey(hunks0[0].changes[11])]: <Note>We create a table which contains rows of accounts:</Note>,
+      [getChangeKey(hunks0[0].changes[16])]: <Note>Our first property on the function:</Note>,
     },
   },
   { hunks: hunks1,
@@ -113,7 +113,35 @@ const pages = [
     ),
     postDescription: '',
     widgets: {
-      [getChangeKey(hunks1[0].changes[13])]: <Warning>(invariant) Invalidating model found: from = "" :: String, to = "" :: String, amount = -39 :: Integer</Warning>,
+      [getChangeKey(hunks1[0].changes[13])]: (
+<Warning><code><pre>{`
+test.pact:16:0:Warning: Invalidating model found:
+  Arguments:
+    from := ""
+    to := ""
+    amount := -2
+
+  Variables:
+    from-bal := 1
+    from-ks := KeySet 2
+    to-bal := 1
+
+  Reads:
+    "" => { balance: 1, ks: KeySet 2 }
+    "" => { balance: 1, ks: KeySet 2 }
+    "" => { balance: 1, ks: KeySet 2 }
+
+  Writes:
+    "" => { balance: 3, ks: KeySet 0 }
+    "" => { balance: -1, ks: KeySet 0 }
+
+  Keysets:
+    authorized:   database keyset at (accounts, 'ks, "")
+
+  Result:
+    "Write succeeded"
+`}</pre></code></Warning>
+      ),
     },
   },
   { hunks: hunks2,
@@ -147,7 +175,35 @@ const pages = [
       </div>
     ),
     widgets: {
-      [getChangeKey(hunks3[0].changes[16])]: <Warning>Invalidating model found: from = "" :: String, to = "" :: String, amount = 1 :: Integer</Warning>,
+      [getChangeKey(hunks3[0].changes[16])]: (
+<Warning><code><pre>{`
+test.pact:20:6:Warning: Invalidating model found:
+  Arguments:
+    from := ""
+    to := ""
+    amount := 1
+
+  Variables:
+    from-bal := 2
+    from-ks := KeySet 4
+    to-bal := 2
+
+  Reads:
+    "" => { balance: 2, ks: KeySet 4 }
+    "" => { balance: 2, ks: KeySet 4 }
+    "" => { balance: 2, ks: KeySet 4 }
+
+  Writes:
+    "" => { balance: 1, ks: KeySet 0 }
+    "" => { balance: 3, ks: KeySet 0 }
+
+  Keysets:
+    authorized:   database keyset at (accounts, 'ks, "")
+
+  Result:
+    "Write succeeded"
+`}</pre></code></Warning>
+      )
     },
   },
   { hunks: hunks4,
