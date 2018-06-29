@@ -158,8 +158,8 @@ const pages = [
     "" => { balance: 1, ks: KeySet 2 }
 
   Writes:
-    "" => { balance: 3, ks: KeySet 0 }
-    "" => { balance: -1, ks: KeySet 0 }
+    "" => { balance: 3 }
+    "" => { balance: -1 }
 
   Keysets:
     authorized:   database keyset at (accounts, 'ks, "")
@@ -218,8 +218,8 @@ const pages = [
     "" => { balance: 2, ks: KeySet 4 }
 
   Writes:
-    "" => { balance: 1, ks: KeySet 0 }
-    "" => { balance: 3, ks: KeySet 0 }
+    "" => { balance: 1 }
+    "" => { balance: 3 }
 
   Keysets:
     authorized:   database keyset at (accounts, 'ks, "")
