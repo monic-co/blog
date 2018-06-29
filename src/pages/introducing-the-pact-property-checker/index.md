@@ -237,7 +237,7 @@ Currently there's no way to define a new property by name. We have to write `(= 
 
 ### Improved UX
 
-Currently, for falsifying models, we show concrete arguments, DB accesses, and whether keysets were authorized, but due to the fact that symbolic programs don't execute linearly from inputs to output, these models can be slightly confusing. Consider a program with a conditional that performs a DB write in either branch -- the falsifying model will actually contain *both* DB writes, even though concrete execution would only perform one.
+Currently, for falsifying models, we show concrete arguments, DB accesses, and whether keysets were authorized; but due to the fact that symbolic programs don't execute linearly from inputs to output, these models can be slightly confusing. Consider a program with a conditional that performs a DB write in either branch -- the falsifying model will actually contain *both* DB writes, even though concrete execution would only perform one.
 
 We plan to improve this experience by synthesizing a linear execution trace from the model, similar to what something like the Chrome DevTools debugger might show. This would contain a full walk through a single concrete execution path, without any superfluous DB accesses or variable bindings from paths not taken. This work is [currently in-progress](https://github.com/kadena-io/pact/issues/132), and we'll share more about this in an upcoming post.
 
