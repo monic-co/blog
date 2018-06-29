@@ -243,15 +243,7 @@ export default function AnnotatedCode() {
     <Wrapper key={index}>
       <h2>Step {index + 1}: {title}</h2>
       <Description>{preDescription}</Description>
-      <Diff
-        hideGutter={true}
-        // hack to get prism to detect the language
-        className="language-lisp"
-        hunks={hunks}
-        viewType="unified"
-        widgets={widgets}
-        onRenderCode={elem => Prism.highlightElement(elem)}
-      />
+      diff would go here!
       <Description>{postDescription}</Description>
     </Wrapper>
   ));
