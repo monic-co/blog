@@ -237,9 +237,9 @@ Currently there's no way to define a new property by name. We have to write `(= 
 
 ### Improved UX
 
-Right now we show falsifying inputs to a function, but as we've seen, there's still some work left to the user. You need to mentally step through the code line-by-line to understand what those inputs mean for your code. Worse, in the current release, we don't (yet!) show values read from the database.
+Currently, for falsifying models, we show concrete arguments, DB accesses, and whether keysets were authorized, but due to the fact that symbolic programs don't execute linearly from inputs to output, these models can be slightly confusing. Consider a program with a conditional that performs a DB write in either branch -- the falsifying model will actually contain *both* DB writes, even though concrete execution would only perform one.
 
-We plan to improve this experience by showing a line-by-line trace of values, similar to what a debugger like the Chrome devtools debugger might show. This work is [currently in-progress](https://github.com/kadena-io/pact/issues/132), and we'll share more about this in an upcoming post.
+We plan to improve this experience by synthesizing a linear execution trace from the model, similar to what something like the Chrome DevTools debugger might show. This would contain a full walk through a single concrete execution path, without any superfluous DB accesses or variable bindings from paths not taken. This work is [currently in-progress](https://github.com/kadena-io/pact/issues/132), and we'll share more about this in an upcoming post.
 
 ### Covering all of the language
 
