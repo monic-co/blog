@@ -124,7 +124,9 @@ exampleProgram = Query $ foldr1 Concat [ "SELECT msg FROM msgs WHERE topicid='"
                                        ]
 ```
 
-Now we need some way to translate these expressions into constraints that Z3 can solve. Surprisingly, this translation looks a lot like evaluation. One way to think about this is that we're going to ask Z3 to run evaluation backwards (to give us a user input producing some SQL output). So we need to describe to Z3 how evaluation runs forwards.
+Now we need some way to translate these expressions into constraints that Z3 can solve. Perhaps surprisingly, this translation looks a lot like evaluation -- and that's because it is! This is *symbolic*, rather than the standard form of *concrete*, evaluation. In symbolic evaluation, instead of successively computing (concrete) intermediate values until we produce our output, we instead pass over the program, accumulating a set of symbolic values (think: variables) that are related to one another and are subject to certain constraints. You can think of a system of equations from early algebra classes to help conceptualize this. In a symbolic program, similar to relational or logical programming, the line between inputs and outputs is blurred; instead of computation "moving" in a single "forward" direction, inputs are merely *related* to outputs according to our "system of equations" and constraints. So as we perform symbolic evaluation, we produce a symbolic value that represents our return value, that is constructed from, and is related to, our inputs.
+
+For this particular task, we'll fix our output SQL statement, and ask Z3 to produce a certain, satisfying user input -- effectively evaluating backwards.
 
 ```haskell
 -- | Evaluation monad. The state argument is the environment to store
@@ -145,7 +147,7 @@ eval (ReadVar nm)   = do n   <- eval nm
 
 `SFunArray a b` represents a mapping (think of a block of memory or a database table) from *symbolic* values of type `a` to *symbolic* values of type `b`. Our `SFunArray String String` represents the variables in scope in our language. We also write our program's queries as `[SString]` (where `SString` is an SBV symbolic string).
 
-We need to recognize exploits. To do so we use Z3's support for regular expressions. (Where SMT stands for "satisfiability modulo theories", here we use the *theories* for strings and regular expressions).
+Our goal is to recognize exploits. To do so we use Z3's support for regular expressions. (Where SMT stands for "satisfiability modulo theories", here we use the *theories* for strings and regular expressions).
 
 From our experience, strings and regular expressions are quite difficult to solve for -- it's easy to accidentally generate a very large space for Z3 to search. To make the problem tractable, we use a simplified model of what exploits look like.
 
