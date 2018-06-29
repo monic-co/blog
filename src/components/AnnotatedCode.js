@@ -240,7 +240,7 @@ const pages = [
 
 export default function AnnotatedCode() {
   let renderedPages = pages.map(({hunks, preDescription, postDescription, widgets, title}, index) => (
-    <Wrapper>
+    <Wrapper key={index}>
       <h2>Step {index + 1}: {title}</h2>
       <Description>{preDescription}</Description>
       <Diff

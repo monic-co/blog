@@ -21,7 +21,7 @@ const BioWrapper = styled.div`
 export default function Bios({ names }) {
   return (
     <BiosWrapper>
-      {names.map(name => bios[name]())}
+      {names.map(name => <div key={name}>{bios[name]()}</div>)}
     </BiosWrapper>
   );
 }
