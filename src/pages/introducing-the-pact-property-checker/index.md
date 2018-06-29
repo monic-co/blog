@@ -251,7 +251,7 @@ We plan to improve this experience by synthesizing a linear execution trace from
 
 ### Covering all of the language
 
-For the initial release, we punted on some parts of the language that are harder to model in Z3. In particular, we're actively working on adding [support for sequences to sbv](https://github.com/LeventErkok/sbv/pull/394) to model lists in Pact.
+For the initial release, we punted on some parts of the language that are less-frequently used and harder to model in Z3. In particular, we're actively working on adding [support for sequences to sbv](https://github.com/LeventErkok/sbv/pull/394) to model lists in Pact.
 
 ### Stronger defaults
 
