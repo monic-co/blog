@@ -24,7 +24,7 @@ Here you can think of the `admins` *keyset* as a pre-published list of the publi
 
 ## The state of smart contract security
 
-As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Almost every exploited high-profile Ethereum contract was written by a foremost Solidity expert (or one of the creators of Ethereum!). How is a newcomer to the platform expected to author a secure contract?
+As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Most exploited high-profile Ethereum contracts were written by Solidity experts or Ethereum Foundation developers. How is a newcomer to the platform expected to author a secure contract?
 
 Though Pact was designed to make programmer errors less likely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
 
