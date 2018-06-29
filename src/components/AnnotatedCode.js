@@ -72,12 +72,27 @@ const Description = styled.div`
   margin: 20px 0;
 `;
 
-const Note = styled.div`
+const NoteOuter = styled.div`
   font-family: Consolas, Courier, monospace;
   margin-left: 0;
-  padding: 10px 0 5px 20px;
-  border-left: 5px solid white;
+  padding: 5px 0;
 `;
+
+const NoteNote = styled.div`
+  background-color: white;
+  display: inline-block;
+  margin-right: 10px;
+  padding: 0 10px;
+`;
+
+function Note({ children }) {
+  return (
+    <NoteOuter>
+      <NoteNote>note</NoteNote>
+      {children}
+    </NoteOuter>
+  );
+}
 
 const pages = [
   { hunks: hunks0,
