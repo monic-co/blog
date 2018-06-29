@@ -129,7 +129,7 @@ const pages = [
     postDescription: '',
     widgets: {
       [getChangeKey(hunks1[0].changes[13])]: (
-<Warning><code><pre>{`
+<Warning><pre>{`
 Invalidating model found:
   Arguments:
     from := ""
@@ -155,7 +155,7 @@ Invalidating model found:
 
   Result:
     "Write succeeded"
-`}</pre></code></Warning>
+`}</pre></Warning>
       ),
     },
   },
@@ -191,7 +191,7 @@ Invalidating model found:
     ),
     widgets: {
       [getChangeKey(hunks3[0].changes[16])]: (
-<Warning><code><pre>{`
+<Warning><pre>{`
 Invalidating model found:
   Arguments:
     from := ""
@@ -217,7 +217,7 @@ Invalidating model found:
 
   Result:
     "Write succeeded"
-`}</pre></code></Warning>
+`}</pre></Warning>
       )
     },
   },
