@@ -50,12 +50,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const Warning = styled.div`
+const WarningOuter = styled.div`
   background-color: #ffffc6;
   font-family: Consolas, Courier, monospace;
   margin-left: 0;
-  border-left: 5px solid white;
-  padding: 10px 0 5px 20px;
+  padding: 10px;
+  padding-left: 20px;
 `;
 
 const Button = styled.button`
@@ -94,6 +94,19 @@ function Note({ children }) {
   );
 }
 
+function Warning({ children }) {
+  return (
+    <WarningOuter>
+      <strong>Invalidating model found:</strong>
+      <div
+        // spacer
+        style={{ height: '10px' }}
+      />
+      <div>{children}</div>
+    </WarningOuter>
+  );
+}
+
 const pages = [
   { hunks: hunks0,
     title: 'initial contract',
@@ -129,8 +142,7 @@ const pages = [
     postDescription: '',
     widgets: {
       [getChangeKey(hunks1[0].changes[13])]: (
-<Warning><pre>{`Invalidating model found:
-  Arguments:
+<Warning><pre>{`Arguments:
     from := ""
     to := ""
     amount := -2
@@ -190,8 +202,7 @@ const pages = [
     ),
     widgets: {
       [getChangeKey(hunks3[0].changes[16])]: (
-<Warning><pre>{`Invalidating model found:
-  Arguments:
+<Warning><pre>{`Arguments:
     from := ""
     to := ""
     amount := 1
