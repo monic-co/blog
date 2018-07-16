@@ -47,6 +47,7 @@ class BlogPostTemplate extends React.Component {
         />
         <Bios names={authors} />
 
+        {/*
         <ul
           style={{
             display: 'flex',
@@ -72,6 +73,7 @@ class BlogPostTemplate extends React.Component {
             </li>
           )}
         </ul>
+        */}
       </div>
     )
   }
