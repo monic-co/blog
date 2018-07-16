@@ -73,22 +73,15 @@ const Description = styled.div`
 `;
 
 const NoteOuter = styled.div`
+  background-color: #ffffc6;
   font-family: Consolas, Courier, monospace;
   margin-left: 0;
-  padding: 5px 0;
-`;
-
-const NoteNote = styled.div`
-  background-color: white;
-  display: inline-block;
-  margin-right: 10px;
-  padding: 0 10px;
+  padding: 5px 0 5px 20px;
 `;
 
 function Note({ children }) {
   return (
     <NoteOuter>
-      <NoteNote>note</NoteNote>
       {children}
     </NoteOuter>
   );
@@ -113,7 +106,7 @@ const pages = [
     preDescription: (
       <div>
         <p>
-          In the initial version of our smart contract, the <code>transfer</code> function checks that the sender authorized the transfer (by signing the transaction sent to the blockchain) and that they have sufficient funds. It then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.
+          In the initial version of our smart contract, the <code>transfer</code> function checks that the sender authorized the transfer (the transaction sent to the blockchain was signed by the sender) and that they have sufficient funds. It then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.
         </p>
         <p>
           Note that we start out with one property, using <code>row-enforced</code>. This states that the row indexed by <code>name</code> must have the keyset it contains (in its <code>ks</code> column) "enforced" in every possible code path. If the function's implementation enforces the keyset, the transaction will abort if it was not signed by "owner" of that row.
