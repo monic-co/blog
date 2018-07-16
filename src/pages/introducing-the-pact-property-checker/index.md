@@ -117,3 +117,5 @@ Once we have `defproperty`, we'll have all of the necessary building blocks to w
 ## More to come
 
 Those were just a few of the projects we have on our roadmap, as we work towards a great environment for writing correct contracts. Of course, there's a lot to do, and we're hiring, so if you made it this far and you're interested in our work, definitely [get in touch](mailto:joel@monic.co)!
+
+*Thanks to Libby Kent for reading a draft of this post.*
