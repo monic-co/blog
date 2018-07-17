@@ -5,7 +5,7 @@ tags:
 authors: [joel, brian]
 ---
 
-Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has developed new a static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the *property checker*. In this post we'll talk about the purpose of the tool, what it can do today, and what we have planned for the future.
+Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has [open-sourced](https://github.com/kadena-io/pact/tree/master/src/Pact/Analyze) a language-integrated static analysis tool for the [Pact](https://github.com/kadena-io/pact) smart contract language that we're calling the *property checker*. In this post we'll talk about the purpose of the tool, what it can do today, and what we have planned for the future.
 
 ## Pact: some background
 
@@ -42,6 +42,8 @@ To address the current state of affairs, we've built our property checking syste
 that must hold for _all_ possible inputs and database states.
 
 The Pact property checker shares some similarities with contracts (note: not smart contracts!) from e.g. [Dafny](https://github.com/Microsoft/dafny) and [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/)-style refinement types.
+
+It was implemented in Haskell and powered by the [sbv library](https://hackage.haskell.org/package/sbv) for SMT solving.
 
 ## Some simple examples
 
