@@ -7,6 +7,7 @@ module.exports = {
   },
   pathPrefix: '/gatsby-starter-blog',
   plugins: [
+    'gatsby-plugin-remove-serviceworker',
     {
       resolve: `gatsby-source-filesystem`,
       options: {
