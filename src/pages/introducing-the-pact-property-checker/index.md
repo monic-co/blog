@@ -9,7 +9,7 @@ Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has de
 
 ## Pact: some background
 
-As a smart contract language, Pact is designed to be run within the confines of a blockchain. If you're not completely familiar with how smart contracts work, it's helpful to understand them as autonomous agents with which users interact. A user submits a transaction to the network, and if accepted into the system, this will either create a new contract, or interact with an existing one already deployed to the system. In Pact, each contract maintains state across interactions via a SQL-like table model for data.
+As a smart contract language, Pact is designed to be run on a blockchain. If you're not completely familiar with how smart contracts work, it's helpful to understand them as autonomous agents with which users interact. A user submits a transaction to the network, and if accepted into the system, this will either create a new contract, or interact with an existing one already deployed to the system. In Pact, each contract maintains state across interactions via a SQL-like table model for data.
 
 Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node), but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally). In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll back) the transaction:
 
@@ -28,7 +28,7 @@ In general, a *keyset* is a set of users (public keys) authorized to perform som
 
 ## The state of smart contract security
 
-As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Most exploited high-profile Ethereum contracts were written by Solidity experts or Ethereum Foundation developers. How is a newcomer to the platform expected to author a secure contract?
+As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Most exploited high-profile Ethereum contracts were written by Solidity experts or Ethereum Foundation developers. Existing smart contract platforms (not just Ethereum) make security exceptionally hard.
 
 Though Pact was designed to make programmer errors less likely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
 
@@ -86,7 +86,7 @@ We'll write a simple contract for tracking user balances of a fictional currency
 
 ## Future directions
 
-We're actively developing this tool and very excited for the projects we have planned.
+We're actively developing this tool and very excited for these upcoming projects.
 
 ### Abstracting properties
 

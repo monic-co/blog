@@ -1,6 +1,6 @@
 ---
 title: How the Pact property checker works
-date: 2018-07-13 00:00:00
+date: 2018-07-17 00:00:00
 tags:
 published: false
 authors: [joel, brian]

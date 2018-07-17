@@ -109,7 +109,7 @@ const pages = [
           In the initial version of our smart contract, the <code>transfer</code> function checks that the sender authorized the transfer (the transaction sent to the blockchain was signed by the sender) and that they have sufficient funds. It then updates both the sending (<code>from</code>) and receiving (<code>to</code>) account balances.
         </p>
         <p>
-          Note that we start out with one property, using <code>row-enforced</code>. This states that the row indexed by <code>name</code> must have the keyset it contains (in its <code>ks</code> column) "enforced" in every possible code path. If the function's implementation enforces the keyset, the transaction will abort if it was not signed by "owner" of that row.
+          Note that we start out with one property, using <code>row-enforced</code>. This states that the row indexed by <code>name</code> must have the keyset it contains (in its <code>ks</code> column) "enforced" in every possible code path. If the function's implementation enforces the keyset, the transaction will abort if it was not signed by the owner of that row.
         </p>
       </div>
       ),
@@ -186,10 +186,18 @@ const pages = [
         <p>
           If we look closely at the last two lines of the function, we see that, given the provided inputs (<code>amount</code> set to <code>1</code> and a sender and receiver of the same account, <code>""</code>) we end up performing the following two writes:
         </p>
-        <code>(update accounts "" {'{'} "balance": (- from-bal 1) }) ; This write is moot.</code><br />
+        <code>(update accounts "" {'{'} "balance": (- from-bal 1) })</code><br />
         <code>(update accounts "" {'{'} "balance": (+ to-bal 1) &nbsp;&nbsp;})</code>
         <p>
-          which first update the balance to be <code>from-bal - 1</code>, and immediately then <em>overwrite that value</em> with <code>to-bal + 1</code>. The net effect is that this set of inputs lets an attacker create $1 out of thin air!
+          Comparing to the <code>Writes</code>-section of the invalidating model report:
+        </p>
+        <pre>{`
+        Writes:
+          "" => { balance: 1 }
+          "" => { balance: 3 }
+        `}</pre>
+        <p>
+          This shows that, starting from $2, we first update the balance to be $1, and immediately then <em>overwrite that value</em> with $3. The net effect is that this set of inputs lets an attacker create $1 out of thin air!
         </p>
       </div>
     ),
