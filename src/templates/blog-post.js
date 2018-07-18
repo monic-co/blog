@@ -2,8 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import Link from 'gatsby-link'
 import rehypeReact from "rehype-react";
-import loadLanguages from 'prismjs/components/index.js'
-loadLanguages(['lisp']);
+require('prismjs/components/prism-lisp');
 
 import AnnotatedCode from '../components/AnnotatedCode'
 import Bios from '../components/Bio'
