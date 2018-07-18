@@ -43,7 +43,7 @@ that must hold for _all_ possible inputs and database states.
 
 The Pact property checker shares some similarities with contracts (note: not smart contracts!) from e.g. [Dafny](https://github.com/Microsoft/dafny) and [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell-blog/)-style refinement types.
 
-It was implemented in Haskell and is powered by the [sbv library](https://hackage.haskell.org/package/sbv) for SMT solving.
+It is implemented in Haskell and powered by the [sbv library](https://hackage.haskell.org/package/sbv) for SMT solving.
 
 ## Some simple examples
 
