@@ -197,7 +197,7 @@ const pages = [
           "" => { balance: 3 }
         `}</pre>
         <p>
-          This shows that, starting from $2, we first update the balance to be $1, and immediately then <em>overwrite that value</em> with $3. The net effect is that this set of inputs lets an attacker create $1 out of thin air!
+          This shows that, starting from a balance of 2, we first update the balance to be 1, and immediately then <em>overwrite that value</em> with 3. The net effect is that this set of inputs lets an attacker create money out of thin air!
         </p>
       </div>
     ),
