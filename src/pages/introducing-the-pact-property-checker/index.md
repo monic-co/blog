@@ -1,6 +1,6 @@
 ---
 title: Introducing the Pact property checker
-date: 2018-07-16 00:00:00
+date: 2018-07-18 00:00:00
 tags:
 authors: [joel, brian]
 ---
