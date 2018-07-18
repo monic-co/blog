@@ -9,7 +9,7 @@ Together with [Kadena](http://kadena.io/), [Monic](https://www.monic.co/) has [o
 
 ## Pact: some background
 
-As a smart contract language, Pact is designed to be run on a blockchain. If you're not completely familiar with how smart contracts work, it's helpful to understand them as autonomous agents with which users interact. A user submits a transaction to the network, and if accepted into the system, this will either create a new contract, or interact with an existing one already deployed to the system. In Pact, each contract maintains state across interactions via a SQL-like table model for data.
+As a smart contract language, Pact is designed to be run on a blockchain. If you're not completely familiar with how smart contracts work, it's helpful to understand them as autonomous agents with which users interact. A user submits a transaction to the network, and if accepted into the system, this will either create a new contract, or interact with an existing one already deployed to the system. In Pact, each contract maintains state across these interactions via a SQL-like table model for data.
 
 Like most smart contract languages, Pact is deterministic (so that the same code produces the same result when executing on each node), but additionally it's much more computationally constrained than languages like Ethereum's Solidity (or the EVM generally). In Pact, there are no loops, recursion, null values, or exceptions; and authorization patterns are encoded as builtins which either successfully execute or abort (and roll back) the transaction:
 
