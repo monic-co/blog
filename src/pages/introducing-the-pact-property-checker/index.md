@@ -118,6 +118,6 @@ Once we have `defproperty`, we'll have all of the necessary building blocks to w
 
 ## More to come
 
-Those were just a few of the projects we have on our roadmap, as we work towards a great environment for writing correct contracts. Of course, there's a lot to do, and we're hiring, so if you made it this far and you're interested in our work, definitely [get in touch](mailto:joel@monic.co)!
+These are just a few of the projects on the Pact [formal verification roadmap](https://github.com/kadena-io/pact/projects/1), as we work towards a great environment for writing correct contracts. Of course, there's a lot to do -- [Pact](https://github.com/kadena-io/pact) is always looking for more contributors, and Monic is hiring, so if you made it this far and you're interested in our work, definitely [get in touch](mailto:joel@monic.co)!
 
 <small>*Thanks to [Libby Kent](https://twitter.com/viskobatz) and [Stuart Popejoy](https://twitter.com/sirlensalot) for reading a draft of this post.*</small>
