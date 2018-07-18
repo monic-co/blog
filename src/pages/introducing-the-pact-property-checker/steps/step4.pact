@@ -20,12 +20,11 @@
       (= (column-delta 'accounts 'balance) 0)
       ]))
 
-  (let ((from-bal (at 'balance (read accounts from)))
-        (from-ks  (at 'ks      (read accounts from)))
-        (to-bal   (at 'balance (read accounts to))))
-    (enforce-keyset from-ks)
-    (enforce (>= from-bal amount) "Insufficient Funds")
-    (enforce (> amount 0)         "Amount must be positive")
-    (enforce (!= from to)         "Sender and recipient can't be the same")
-    (update accounts from { "balance": (- from-bal amount) })
-    (update accounts to   { "balance": (+ to-bal amount) }))))
+  (with-read accounts from { 'balance := from-bal, 'ks := from-ks }
+    (with-read accounts to { 'balance := to-bal }
+      (enforce-keyset from-ks)
+      (enforce (>= from-bal amount) "Insufficient Funds")
+      (enforce (> amount 0)         "Amount must be positive")
+      (enforce (!= from to)         "Sender and recipient can't be the same")
+      (update accounts from { "balance": (- from-bal amount) })
+      (update accounts to   { "balance": (+ to-bal amount) })))))

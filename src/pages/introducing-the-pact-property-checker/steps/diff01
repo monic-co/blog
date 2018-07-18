@@ -1,8 +1,8 @@
 diff --git step0.pact step1.pact
-index 117e111..6c7dfe7 100644
+index fa3c061..bedf6ac 100644
 --- step0.pact
 +++ step1.pact
-@@ -1,27 +1,28 @@
+@@ -1,26 +1,27 @@
  (enforce-pact-version "2.4.1")
  
  (define-keyset 'accounts-admin-keyset
@@ -25,10 +25,9 @@ index 117e111..6c7dfe7 100644
        (row-enforced 'accounts 'ks from)
        ]))
  
-   (let ((from-bal (at 'balance (read accounts from)))
-         (from-ks  (at 'ks      (read accounts from)))
-         (to-bal   (at 'balance (read accounts to))))
-     (enforce-keyset from-ks)
-     (enforce (>= from-bal amount) "Insufficient Funds")
-     (update accounts from { "balance": (- from-bal amount) })
-     (update accounts to   { "balance": (+ to-bal amount) }))))
+   (with-read accounts from { 'balance := from-bal, 'ks := from-ks }
+     (with-read accounts to { 'balance := to-bal }
+       (enforce-keyset from-ks)
+       (enforce (>= from-bal amount) "Insufficient Funds")
+       (update accounts from { "balance": (- from-bal amount) })
+       (update accounts to   { "balance": (+ to-bal amount) })))))

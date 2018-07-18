@@ -1,0 +1,12 @@
+1. edit step[0-3].pact
+
+2.
+    git diff --no-index --no-prefix -U1000 /dev/null step0.pact  > diffnull0
+    git diff --no-index --no-prefix -U1000 step0.pact step1.pact > diff01
+    git diff --no-index --no-prefix -U1000 step1.pact step2.pact > diff12
+    git diff --no-index --no-prefix -U1000 step1.pact step2.pact > diff12
+    git diff --no-index --no-prefix -U1000 step1.pact step2.pact > diff12
+    git diff --no-index --no-prefix -U1000 step2.pact step3.pact > diff23
+    git diff --no-index --no-prefix -U1000 step3.pact step4.pact > diff34
+
+3. update any line numbers in AnnotatedCode.js
