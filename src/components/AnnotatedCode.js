@@ -4,8 +4,8 @@ import {getChangeKey} from '../../react-diff-view/src/utils'
 import Diff from '../../react-diff-view/src/Diff'
 import styled from "react-emotion"
 import Prism from 'prismjs/components/prism-core'
+import './prism-lisp'
 import 'prismjs/plugins/keep-markup/prism-keep-markup'
-require('prismjs/components/prism-lisp');
 
 require('../../react-diff-view/src/Change.css');
 require('../../react-diff-view/src/Diff.css');
