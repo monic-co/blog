@@ -24,7 +24,7 @@ Like most smart contract languages, Pact is deterministic (so that the same code
 
 Here you can think of the `admins` *keyset* as a pre-published list of administrators of the smart contract.
 
-In general, a *keyset* is a set of users (public keys) authorized to perform some action. `enforce-keyset` checks that the current user matches a keyset. In this case we're checking that the user is an admin. One interesting feature of keysets in Pact is that they're first-class: they can be (e.g.) passed as arguments to a function or stored in the database.
+In general, a *keyset* is a set of users (public keys) authorized to perform some action. `enforce-keyset` checks that the current user (from the transaction's metadata) matches a keyset. In this case we're checking that the user is an admin. One interesting feature of keysets in Pact is that they're first-class: they can be (e.g.) passed as arguments to a function or stored in the database.
 
 ## The state of smart contract security
 
