@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: 'MONIC Blog',
-    author: 'MONIC',
-    description: 'Updates from the monic team',
+    title: 'Monic Blog',
+    author: 'Monic',
+    description: 'Updates from the Monic team',
     siteUrl: 'https://blog.monic.co',
   },
   pathPrefix: '/gatsby-starter-blog',

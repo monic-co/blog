@@ -85,7 +85,7 @@ export default class Template extends React.Component {
           <HeaderBoxLeft>
             <HeadH1>
               <HeadLink href="https://www.monic.co">
-                <Monic>MONIC</Monic>
+                <Monic>Monic</Monic>
               </HeadLink>
             </HeadH1>
           </HeaderBoxLeft>
