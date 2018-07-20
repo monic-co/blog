@@ -28,7 +28,7 @@ In general, a *keyset* is a set of users (public keys) authorized to perform som
 
 ## The state of smart contract security
 
-As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Most exploited high-profile Ethereum contracts were written by Solidity experts or Ethereum Foundation developers. Existing smart contract platforms (not just Ethereum) make security exceptionally hard.
+As we've seen from the string of successful attacks on contracts in the Ethereum world, it's clear that the current approaches to smart contract security aren't working. Most exploited high-profile Ethereum contracts were written by Solidity experts. Existing smart contract platforms (not just Ethereum) make security exceptionally hard.
 
 Though Pact was designed to make programmer errors less likely, between the combination of conditionals, DB access, and authorization concerns, programs can become non-trivial very quickly. Pact's (optional) type system goes some way toward building confidence in programs, but in the adversarial world of smart contracts, type systems and unit tests aren't sufficient for building secure systems.
 
