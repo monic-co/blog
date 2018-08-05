@@ -174,6 +174,8 @@ s6 = "SELECT msg FROM msgs WHERE topicid='" ++ badTopic ++ "'"
 
 `s7` is mostly a translation of the regexes we wrote. Dissected, formatted, and commented by hand for your learning pleasure:
 
+TODO: code folding would be amazing here. How to condense this?
+
 ```
 (define-fun s7 () Bool
   ; does s6 match exploitRe?
@@ -224,3 +226,6 @@ s6 = "SELECT msg FROM msgs WHERE topicid='" ++ badTopic ++ "'"
 
 At this point, understanding the interaction is easy.  `(assert s7)` says "I assert that there is no input producing a query matching our exploit pattern". Then the two sets of `SEND` / `RECV` at the very end are Z3 saying, "actually, I know a bad input" (`sat`) and "here it is" (`((s0 "h'; DROP TABLE 'users"))`).
 
+## Conclusion
+
+TODO
