@@ -93,7 +93,7 @@ To perform queries over these systems of constraints, we’ll enlist the aid of 
 
 ## SMT: Satisfiability Modulo Theories
 
-In computer science, the *SAT* ("Boolean satisfiability”) problem is concerned with determining whether a given Boolean formula (comprised of variables, $$\wedge$$, $$\vee$$, and $$\neg$$) is satisfiable — whether there exists an assignment of concrete Boolean values (i.e. `true` or `false`) to variables in the formula such that the entire expression evaluates to `true`. A program which automatically performs this determination is called a SAT solver, which is one type of automated theorem prover.
+In computer science, the *SAT* ("Boolean satisfiability”) problem is concerned with determining whether a given Boolean formula (comprised of variables, $\wedge$, $\vee$, and $\neg$) is satisfiable — whether there exists an assignment of concrete Boolean values (i.e. `true` or `false`) to variables in the formula such that the entire expression evaluates to `true`. A program which automatically performs this determination is called a SAT solver, which is one type of automated theorem prover.
 
 Generalizing SAT, the *SMT* (“satisfiability modulo theories”) problem is concerned with determining the satisfiability of logical formulas that are not merely Boolean, but are extended to [first-order logic](https://en.wikipedia.org/wiki/First-order_logic) and support for different *theories* — support for talking about integers, real numbers, arrays, and a few other structures. In the context of symbolically executing programs, several of these theories (like integers and arrays) are quite useful, as they allow constraints to be described at a higher level of abstraction and solved more efficiently.
 
@@ -131,7 +131,7 @@ And indeed, when we ask [Z3](https://github.com/Z3Prover/z3), an SMT solver from
 )
 ```
 
-When `x`  is `5`  and `y` is `-16`, the program produces a result of `-1`.[^constants]
+When `x`  is `5`  and `y` is `-16`, the program produces a result of `-1`.[^1]
 
 ### Querying for validity
 
@@ -176,4 +176,4 @@ Also, while you’re here, if you have a problem or project where we can help yo
 
 <small>*Thanks to [Martin Allen](https://github.com/blinky3713) and [Charlie Martin](https://github.com/cmmartin) for reading a draft of this post.*</small>
 
-[^constants]: Surprisingly, we see in the model that each of our `Int` “constants” (`x`, `y`, and `result`) are actually encoded as zero-argument functions that return `Int`. Correspondingly, an SMT-LIB expression like `(declare-const x Int)` is actually syntactic sugar for `(declare-fun x () Int)`. This declares a free, or, *uninterpreted*, function that has no user-provided concrete implementation. `(define-fun x () Int 5)` from our model is one possible assignment — an *interpretation* — for that function. It’s a constant function that always returns `5` whenever it’s called.
+[^1]: Surprisingly, we see in the model that each of our `Int` “constants” (`x`, `y`, and `result`) are actually encoded as zero-argument functions that return `Int`. Correspondingly, an SMT-LIB expression like `(declare-const x Int)` is actually syntactic sugar for `(declare-fun x () Int)`. This declares a free, or, *uninterpreted*, function that has no user-provided concrete implementation. `(define-fun x () Int 5)` from our model is one possible assignment — an *interpretation* — for that function. It’s a constant function that always returns `5` whenever it’s called.
