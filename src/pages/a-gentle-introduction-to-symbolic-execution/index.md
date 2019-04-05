@@ -3,7 +3,7 @@ title: A gentle introduction to symbolic execution
 date: 2018-07-18 00:00:00
 tags:
 published: false
-authors: [brian]
+authors: [brian, joel]
 ---
 
 <!-- diagrams come from https://www.overleaf.com/project/5c86bacb62afe55c8edb11e0 -->
