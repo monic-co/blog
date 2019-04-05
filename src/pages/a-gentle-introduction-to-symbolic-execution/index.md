@@ -156,7 +156,7 @@ We translate the program to SMT-LIB and *try* to induce a negative return value:
 
 And when we ask to `(check-sat)`, we receive `unsat` in return. By demonstrating that there’s no possible model where the function produces a negative number, we have *proved* that the function always returns a non-negative number.
 
-In general, if we wish to prove a formula $\phi$, we can show that $\neg \phi$ is unsatisfiable. In this case, we can say that formula $\phi$ is *valid*, or that $\phi$ is a theorem — that there is no possible model in which the formula is false. The notions of validity and satisfiability are dual:
+In general, proving a formula $\phi$ is equivalent to showing that $\neg \phi$ is unsatisfiable. In this case, we say that formula $\phi$ is *valid*, or that $\phi$ is a theorem — that there is no possible model in which the formula is false. The notions of validity and satisfiability are dual:
 
 $$
 \phi \ valid \Leftrightarrow \neg (\neg \phi \ sat)
