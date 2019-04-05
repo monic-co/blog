@@ -6,6 +6,7 @@ import rehypeReact from "rehype-react";
 import '../components/prism-lisp'
 import AnnotatedCode from '../components/AnnotatedCode'
 import Bios from '../components/Bio'
+import "katex/dist/katex.min.css"
 
 const renderAst = new rehypeReact({
   createElement: React.createElement,
