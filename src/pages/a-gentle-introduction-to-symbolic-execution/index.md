@@ -176,4 +176,6 @@ Also, while you’re here, if you have a problem or project where we can help yo
 
 <small>*Thanks to [Martin Allen](https://github.com/blinky3713) and [Charlie Martin](https://github.com/cmmartin) for reading a draft of this post.*</small>
 
+<br />
+
 [^1]: Surprisingly, we see in the model that each of our `Int` “constants” (`x`, `y`, and `result`) are actually encoded as zero-argument functions that return `Int`. Correspondingly, an SMT-LIB expression like `(declare-const x Int)` is actually syntactic sugar for `(declare-fun x () Int)`. This declares a free, or, *uninterpreted*, function that has no user-provided concrete implementation. `(define-fun x () Int 5)` from our model is one possible assignment — an *interpretation* — for that function. It’s a constant function that always returns `5` whenever it’s called.
