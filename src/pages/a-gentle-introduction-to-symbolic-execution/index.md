@@ -1,6 +1,6 @@
 ---
 title: A gentle introduction to symbolic execution
-date: 2018-07-18 00:00:00
+date: 2019-04-08 00:00:00
 tags:
 published: false
 authors: [brian, joel]
