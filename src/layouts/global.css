@@ -58,3 +58,15 @@ main button:hover, main button:active {
   color: #e0e0e0;
   background-color: #073642;
 }
+
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 300px;
+}
+td, th {
+  text-align: left;
+  border: 1px solid;
+  padding: 5px;
+}
+
