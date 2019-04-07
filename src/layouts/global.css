@@ -80,3 +80,8 @@ tr.removed {
 tr.added {
   background-color: #DEF6E0;
 }
+
+img.diagram {
+  margin: 0 auto; /* centers */
+  display: block;
+}
