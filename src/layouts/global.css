@@ -72,3 +72,10 @@ td, th {
 th {
   border-bottom: 2px solid #788AA6;
 }
+tr.removed {
+  color: #90A0BC;
+  background-color: #F5DFE0;
+}
+tr.added {
+  background-color: #DEF6E0;
+}
