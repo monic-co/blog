@@ -58,7 +58,7 @@ And consider a few of the entries from the corresponding *relation* between `x`,
 | -1      | 0       | 9            |
 | 0       | 1       | 11           |
 | 1       | 2       | 13           |
-| 2       | 3       | 15           |
+| 2       | 1       | 13           |
 | …       | …       | …            |
 
 
