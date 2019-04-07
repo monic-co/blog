@@ -1,0 +1,12 @@
+digraph G {
+  bgcolor="transparent";
+
+  syn -> codegen [color="#0a2e6b"];
+  syn -> types [color="#0a2e6b"];
+  syn -> interp [color="#0a2e6b"];
+
+  syn [label=<syntax<SUB>Haskell</SUB>> color="#0a2e6b" fontcolor="#0a2e6b"];
+  codegen [label=<syntax<SUB>LLVM</SUB>> color="#0a2e6b" fontcolor="#0a2e6b"];
+  types [label=<typechecking> color="#0a2e6b" fontcolor="#0a2e6b"];
+  interp [label=<interpretation> color="#0a2e6b" fontcolor="#0a2e6b"];
+}

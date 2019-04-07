@@ -1,0 +1,8 @@
+digraph G {
+  bgcolor="transparent";
+
+  syn -> size [color="#0a2e6b"];
+
+  syn [label=<syntax> color="#0a2e6b" fontcolor="#0a2e6b"];
+  size [label=<size> color="#0a2e6b" fontcolor="#0a2e6b"];
+}
