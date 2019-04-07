@@ -40,7 +40,7 @@ To make this computationally tractable, instead of concerning ourselves with eac
 
 These logical constraints represent relationships between different expressions in the program. For example, for the following program:
 
-```
+```haskell
 f : (Int, Int) -> Int
 f (x, y) = x + y + 10
 ```
@@ -165,7 +165,7 @@ When `x`  is `5`  and `y` is `-16`, the program produces a result of `-1`.[^1]
 
 Using an SMT solver to find a satisfying model is only one side of the coin — sometimes what we wish to show is that an *undesirable* constraint is *unsatisfiable*. For example, if we wanted to show that an implementation of the absolute value function can *never return a negative number*, we can `assert` that the program’s result *must be negative*, and check to see whether there’s some way — whether there’s some program input — to satisfy that constraint. And ideally it will turn out to be unsatisfiable. We start with our function in question:
 
-```
+```haskell
 abs : Int -> Int
 abs x = if x < 0 then 0 - x else x
 ```
