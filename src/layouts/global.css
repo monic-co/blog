@@ -63,6 +63,7 @@ table {
   border-collapse: collapse;
   table-layout: fixed;
   width: 300px;
+  margin: 0 auto; /* centers */
 }
 td, th {
   text-align: left;
