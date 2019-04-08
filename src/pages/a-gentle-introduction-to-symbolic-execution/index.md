@@ -235,7 +235,7 @@ If we wish to prove a property of a program in this way but unsuccessfully recei
 
 At this point, we’ve explained the basic idea of symbolic execution and demonstrated how this technique can be applied using an SMT solver to automatically check properties of some simple programs.
 
-To see an example of symbolic-execution-based property checking integrated into a nontrivial language with database state and side effects, check out [our previous blog post](/introducing-the-pact-property-checker/).
+To see an example of symbolic-execution-based property checking integrated into a nontrivial language with database state and side effects, check out our previous blog post about the [Pact property checker](/introducing-the-pact-property-checker/).
 
 Stay tuned for future articles demonstrating how to implement the translation from a program to SMT-LIB, and how to usefully report counterexample models back to end users who are used to understanding programs in terms of sequential execution.
 
