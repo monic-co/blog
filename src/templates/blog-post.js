@@ -29,8 +29,8 @@ class BlogPostTemplate extends React.Component {
         <Helmet title={`${title} | ${siteTitle}`}>
           <meta property="og:type" content="article" />
           <meta name="twitter:site" content="@monic_hq" />
-          <meta name="twitter:card" content="summary">
-          <meta property="og:title" content={title}>
+          <meta name="twitter:card" content="summary" />
+          <meta property="og:title" content={title} />
         </Helmet>
         <h1>{title}</h1>
         <p
