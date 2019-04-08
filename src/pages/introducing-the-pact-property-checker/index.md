@@ -1,5 +1,6 @@
 ---
 title: Introducing the Pact property checker
+description: Together with Kadena, Monic has open-sourced a language-integrated static analysis tool for the Pact smart contract language that we're calling the property checker. In this post we'll talk about the purpose of the tool, what it can do today, and what we have planned for the future.
 date: 2018-07-18 00:00:00
 tags:
 authors: [joel, brian]

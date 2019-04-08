@@ -1,5 +1,6 @@
 ---
 title: A gentle introduction to symbolic execution
+description: In this article we’ll cover the basic idea behind symbolic execution, a powerful yet underutilized technique for static program analysis. Using this technique, we can prove that our code obeys certain properties, rather than staking the correctness of a system on a some hand-written unit and integration tests.
 date: 2019-04-08 00:00:00
 tags:
 authors: [brian, joel]

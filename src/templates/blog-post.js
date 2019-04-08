@@ -15,11 +15,11 @@ const renderAst = new rehypeReact({
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const {data,pathContext} = this.props
-    const post = data.markdownRemark
+    const {data,pathContext} = this.props;
+    const post = data.markdownRemark;
     const {title: siteTitle} = data.site.siteMetadata;
     const { previous, next } = pathContext
-    const { authors, title, date } = post.frontmatter;
+    const { authors, title, date, description } = post.frontmatter;
 
     return (
       <div
@@ -31,6 +31,7 @@ class BlogPostTemplate extends React.Component {
           <meta name="twitter:site" content="@monic_hq" />
           <meta name="twitter:card" content="summary" />
           <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
         </Helmet>
         <h1>{title}</h1>
         <p
@@ -100,6 +101,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         authors
+        description
       }
     }
   }
