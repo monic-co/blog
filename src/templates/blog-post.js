@@ -19,9 +19,10 @@ class BlogPostTemplate extends React.Component {
     const post = data.markdownRemark;
     const {title: siteTitle, siteUrl} = data.site.siteMetadata;
     const { previous, next } = pathContext
-    const { authors, title, date, description, image } = post.frontmatter;
+    const { authors, title, date, description, image, twitterCard } = post.frontmatter;
 
     const imageUrl = image && `${siteUrl}${image}`;
+    const twitterCardType = twitterCard || "summary";
 
     return (
       <div
@@ -35,11 +36,7 @@ class BlogPostTemplate extends React.Component {
           {imageUrl && (
             <meta property="og:image" content={imageUrl} />
           )}
-          {imageUrl ? (
-            <meta name="twitter:card" content="summary_large_image" />
-          ) : (
-            <meta name="twitter:card" content="summary" />
-          )}
+          <meta name="twitter:card" content={twitterCardType} />
           <meta name="twitter:site" content="@monic_hq" />
         </Helmet>
         <h1>{title}</h1>
@@ -113,6 +110,7 @@ export const pageQuery = graphql`
         authors
         description
         image
+        twitterCard
       }
     }
   }
