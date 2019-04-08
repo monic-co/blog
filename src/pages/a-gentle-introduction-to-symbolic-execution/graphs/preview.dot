@@ -1,0 +1,12 @@
+digraph G {
+  syn -> codegen;
+  syn -> types;
+  syn -> interp;
+  syn -> constraints;
+
+  syn [label=<syntax<SUB>Haskell</SUB>>];
+  codegen [label=<syntax<SUB>LLVM</SUB>>];
+  types [label=<types>];
+  interp [label=<interpreter>];
+  constraints [label=<constraints>];
+}

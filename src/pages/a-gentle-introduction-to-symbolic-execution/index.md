@@ -2,6 +2,7 @@
 title: A gentle introduction to symbolic execution
 description: In this article we’ll cover the basic idea behind symbolic execution, a powerful yet underutilized technique for static program analysis. Using this technique, we can prove that our code obeys certain properties, rather than staking the correctness of a system on a some hand-written unit and integration tests.
 date: 2019-04-08 00:00:00
+image: /images/symbolic-preview.png
 tags:
 authors: [brian, joel]
 ---
@@ -24,7 +25,7 @@ We can provide another semantics by mapping from the syntax of one language to t
 
 Alternatively, we can map each syntax tree to an *interpreter*, which consumes program inputs and produces a program output. For our purposes we’ll refer to *interpretation* as *concrete execution*.
 
-<img class="diagram" src="graphs/2.svg" width=415 />
+<img class="diagram" src="graphs/2.svg" width=330 />
 
 In concrete execution, a client running a program must provide a concrete value for every input argument of the program. The execution proceeds sequentially — one reduction step at a time — from the beginning to the end of the program. A single execution path is taken, and the path that we take depends on the inputs that are provided.
 
@@ -36,7 +37,7 @@ When a program has a free variable, we can consider an entire *space* of possibl
 
 To make this computationally tractable, instead of concerning ourselves with each and every possible path, we can represent this space of possibilities using a system of equations — a system of logical constraints.
 
-<img class="diagram" src="graphs/3.svg" width=545 />
+<img class="diagram" src="graphs/3.svg" width=453 />
 
 These logical constraints represent relationships between different expressions in the program. For example, for the following program:
 

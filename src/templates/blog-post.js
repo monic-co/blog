@@ -17,9 +17,11 @@ class BlogPostTemplate extends React.Component {
   render() {
     const {data,pathContext} = this.props;
     const post = data.markdownRemark;
-    const {title: siteTitle} = data.site.siteMetadata;
+    const {title: siteTitle, siteUrl} = data.site.siteMetadata;
     const { previous, next } = pathContext
-    const { authors, title, date, description } = post.frontmatter;
+    const { authors, title, date, description, image } = post.frontmatter;
+
+    const imageUrl = image && `${siteUrl}${image}`;
 
     return (
       <div
@@ -28,10 +30,17 @@ class BlogPostTemplate extends React.Component {
         }}>
         <Helmet title={`${title} | ${siteTitle}`}>
           <meta property="og:type" content="article" />
-          <meta name="twitter:site" content="@monic_hq" />
-          <meta name="twitter:card" content="summary" />
           <meta property="og:title" content={title} />
           <meta property="og:description" content={description} />
+          {imageUrl && (
+            <meta property="og:image" content={imageUrl} />
+          )}
+          {imageUrl ? (
+            <meta name="twitter:card" content="summary_large_image" />
+          ) : (
+            <meta name="twitter:card" content="summary" />
+          )}
+          <meta name="twitter:site" content="@monic_hq" />
         </Helmet>
         <h1>{title}</h1>
         <p
@@ -92,6 +101,7 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        siteUrl
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -102,6 +112,7 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         authors
         description
+        image
       }
     }
   }
