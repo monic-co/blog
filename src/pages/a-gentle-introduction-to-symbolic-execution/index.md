@@ -52,20 +52,48 @@ $$
 
 And consider a few of the entries from the corresponding *relation* between `x`, `y`, and the program’s `result`:
 
-|   `x`   |   `y`   |   `result`   |
-| ------- | ------- | ------------ |
-| -1      | 0       | 9            |
-| 0       | 1       | 11           |
-| 1       | 2       | 13           |
-| 2       | 1       | 13           |
-| …       | …       | …            |
-
+<table class="relation">
+  <thead>
+    <tr>
+      <th><code class="language-text">x</code></th>
+      <th><code class="language-text">y</code></th>
+      <th><code class="language-text">result</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-1</td>
+      <td>0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
 
 In this relational setting, we’re concerned with the *relationship* between expressions, without distinguishing program inputs as primary to the program output, or the output as strictly determined by the inputs.
 
 Using a certain type of tool (which we’ll get to below), we can effectively perform queries over these relations. For example, we can ask, “are there any values of `x` and `y` that lead to a `result` of `13`?” In this query, `x` and `y` are free variables and the result is concrete. Where the relation above embodies a system of constraints produced from the program (with all free variables), we can think of applying this query as *further constraining* that relation:
 
-<table>
+<table class="relation">
   <thead>
     <tr>
       <th><code class="language-text">x</code></th>
@@ -107,10 +135,22 @@ And indeed, there’s at least one *model*, or satisfying assignment to the vari
 We can ask another question: “what is the result when `x` is `3` and `y` is `100`?" When we perform this
 query, there’s exactly one satisfying model:
 
-|   `x`   |   `y`   |  `result`  |
-| ------- | ------- | ---------- |
-| 3       | 100     | 103        |
-
+<table class="relation">
+  <thead>
+    <tr>
+      <th><code class="language-text">x</code></th>
+      <th><code class="language-text">y</code></th>
+      <th><code class="language-text">result</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>100</td>
+      <td>103</td>
+    </tr>
+  </tbody>
+</table>
 
 In this query, our program inputs were concrete and the result was kept free —  just like in concrete execution. In this sense, we can actually consider concrete execution as a special case of symbolic execution where we happen to be interested in *only computing “forwards”* — strictly from inputs to outputs.
 
