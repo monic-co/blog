@@ -12,7 +12,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       graphql(
         `
           {
-            allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, limit: 1000) {
+            allMarkdownRemark(
+             sort: {fields: [frontmatter___date], order: DESC},
+               ${
+                 process.env.NODE_ENV === 'production' ?
+                 'filter: {frontmatter: {published: {ne: false}}}' :
+                 ''
+               }
+               limit: 1000
+            ) {
               edges {
                 node {
                   fields {
